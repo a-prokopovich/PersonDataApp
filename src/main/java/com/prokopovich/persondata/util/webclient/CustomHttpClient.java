@@ -5,12 +5,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CustomHttpClient {
+public class CustomHttpClient implements CustomClient {
 
-    public CustomHttpResponse getData(URL url) throws IOException {
+    @Override
+    public CustomResponse getData(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         int code = connection.getResponseCode();
         InputStream inputStream = connection.getInputStream();
-        return new CustomHttpResponse(code, inputStream);
+        return new CustomResponse(code, inputStream);
     }
 }

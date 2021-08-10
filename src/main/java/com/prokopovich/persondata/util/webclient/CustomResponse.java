@@ -2,11 +2,12 @@ package com.prokopovich.persondata.util.webclient;
 
 import java.io.InputStream;
 
-public class CustomHttpResponse {
+public class CustomResponse {
+
     private int statusCode;
     private InputStream body;
 
-    public CustomHttpResponse(int statusCode, InputStream body) {
+    public CustomResponse(int statusCode, InputStream body) {
         this.statusCode = statusCode;
         this.body = body;
     }

@@ -1,11 +1,11 @@
 package com.prokopovich.persondata;
 
-import com.prokopovich.persondata.service.UrlService;
+import com.prokopovich.persondata.view.TerminalView;
 
 public class PersonDataApp {
 
     public static void main(String [] args) {
-        UrlService guiService = new UrlService();
-        guiService.startConsoleApp();
+        TerminalView terminalView = new TerminalView();
+        terminalView.displayMenu();
     }
 }
