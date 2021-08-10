@@ -6,6 +6,6 @@ public class PersonDataApp {
 
     public static void main(String [] args) {
         TerminalView terminalView = new TerminalView();
-        terminalView.displayMenu();
+        terminalView.displayStartWindow();
     }
 }
