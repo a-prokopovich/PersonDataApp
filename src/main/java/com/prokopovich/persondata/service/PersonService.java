@@ -1,12 +1,10 @@
 package com.prokopovich.persondata.service;
 
 import com.prokopovich.persondata.model.Person;
-import com.prokopovich.persondata.util.SerializationObject;
 import com.prokopovich.persondata.util.parser.JsonPersonParser;
 import com.prokopovich.persondata.util.parser.PersonParser;
 import com.prokopovich.persondata.util.validator.ModelDataValidator;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -20,9 +18,9 @@ public class PersonService {
         return person;
     }
 
-    public File getDataToDisplay(Person person) throws IOException {
+    public Person modifyPersonToDisplay(Person person) {
         Person clonePerson = person.clone();
         clonePerson.setPassportData(null);
-        return SerializationObject.serializeObject(clonePerson);
+        return clonePerson;
     }
 }

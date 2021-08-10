@@ -12,7 +12,11 @@ public class TerminalView implements ViewApp {
     private static final Logger LOGGER = LogManager.getLogger(TerminalView.class);
     private final Scanner in = new Scanner(System.in);
 
-    private final UrlService urlService = new UrlService();
+    private final UrlService urlService;
+
+    public TerminalView(UrlService urlService) {
+        this.urlService = urlService;
+    }
 
     @Override
     public void displayStartWindow() {
