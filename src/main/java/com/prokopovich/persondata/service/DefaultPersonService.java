@@ -40,16 +40,15 @@ public class DefaultPersonService implements PersonService {
             Person person = personConstructor.construct(httpResponse.getBody());
             modifiedPerson = personModifier.modifyToDisplay(person);
         } catch (InvalidUrlException e) {
-            throw new PersonServiceException("entered invalid URL", e.getCause());
+            throw new PersonServiceException("entered invalid URL", e);
         } catch (HttpClientException e) {
-            throw new PersonServiceException("connection error", e.getCause());
+            throw new PersonServiceException("connection error", e);
         } catch (HttpResponseException e) {
-            System.out.println("--------------------" + e.getCause());
-            throw new PersonServiceException("HTTP response error", e.getCause());
+            throw new PersonServiceException("HTTP response error", e);
         } catch (PersonConstructorException e) {
-            throw new PersonServiceException("unable to construct Person", e.getCause());
+            throw new PersonServiceException("unable to construct Person", e);
         } catch (IOException e) {
-            throw new PersonServiceException(e.getMessage(), e.getCause());
+            throw new PersonServiceException(e.getMessage(), e);
         }
         return modifiedPerson.toString();
     }

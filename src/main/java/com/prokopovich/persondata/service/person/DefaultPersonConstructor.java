@@ -23,9 +23,9 @@ public class DefaultPersonConstructor implements PersonConstructor {
             person = parser.parse(personIn);
             validator.checkPersonData(person);
         } catch (ParserException e) {
-            throw new PersonConstructorException("parsing error", e.getCause());
+            throw new PersonConstructorException("parsing error", e);
         } catch (InvalidDataException e) {
-            throw new PersonConstructorException("invalid data", e.getCause());
+            throw new PersonConstructorException("invalid data", e);
         }
         return person;
     }

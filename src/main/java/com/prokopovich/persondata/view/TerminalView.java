@@ -26,7 +26,7 @@ public class TerminalView implements ViewApp {
                 String personInfo = urlService.getDataFromUrl(urlStr);
                 System.out.println("personInfo from URI: \n" + personInfo);
             } catch (PersonServiceException e) {
-                LOGGER.error(e.getMessage() + "\n" + e.getCause());
+                LOGGER.error(e.getMessage());
                 System.out.println("Exception: " + e.getMessage());
             }
             System.out.print("\nGet more data from the URL?" +
