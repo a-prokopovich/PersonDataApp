@@ -1,10 +1,8 @@
 package com.prokopovich.persondata.util.exception;
 
-import java.io.IOException;
+public class InvalidDataException extends RuntimeException {
 
-public class InvalidDataException extends IOException {
-
-    public InvalidDataException(String message) {
-        super(message);
+    public InvalidDataException(String reason) {
+        super("Invalid data, reason: " + reason);
     }
 }

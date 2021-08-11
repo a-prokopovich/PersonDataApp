@@ -1,10 +1,8 @@
 package com.prokopovich.persondata.util.exception;
 
-import java.io.IOException;
+public class InvalidUrlException extends RuntimeException {
 
-public class InvalidUrlException extends IOException {
-
-    public InvalidUrlException(String message) {
-        super(message);
+    public InvalidUrlException(String url) {
+        super("Invalid Url: " + url);
     }
 }
