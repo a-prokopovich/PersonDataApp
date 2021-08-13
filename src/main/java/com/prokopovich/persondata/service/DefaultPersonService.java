@@ -3,7 +3,6 @@ package com.prokopovich.persondata.service;
 import com.prokopovich.persondata.model.Person;
 import com.prokopovich.persondata.service.person.PersonConstructor;
 import com.prokopovich.persondata.service.person.PersonModifier;
-import com.prokopovich.persondata.util.exception.InvalidUrlException;
 import com.prokopovich.persondata.util.exception.PersonConstructorException;
 import com.prokopovich.persondata.util.exception.PersonServiceException;
 import com.prokopovich.persondata.webclient.exception.HttpClientException;
@@ -13,10 +12,6 @@ import com.prokopovich.persondata.util.validator.DefaultEnteredUrlValidator;
 import com.prokopovich.persondata.webclient.HttpClient;
 import com.prokopovich.persondata.webclient.HttpResponse;
 import lombok.RequiredArgsConstructor;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 @RequiredArgsConstructor
 public class DefaultPersonService implements PersonService {
@@ -29,26 +24,24 @@ public class DefaultPersonService implements PersonService {
     private final DefaultHttpResponseValidator responseValidator;
 
     @Override
-    public String getDataFromUrl(String urlStr) {
+    public String getDataFromUrl(String url) {
         Person modifiedPerson;
         try {
-            urlValidator.checkEnteredUrl(urlStr);
+            if (!urlValidator.checkEnteredUrl(url)) {
+                throw new PersonServiceException("entered invalid URL");
+            }
 
-            HttpResponse httpResponse = httpClient.getData(new URL(urlStr));
+            HttpResponse httpResponse = httpClient.getData(url);
             responseValidator.checkHttpResponse(httpResponse);
 
             Person person = personConstructor.construct(httpResponse.getBody());
             modifiedPerson = personModifier.modifyToDisplay(person);
-        } catch (InvalidUrlException e) {
-            throw new PersonServiceException("entered invalid URL", e);
         } catch (HttpClientException e) {
             throw new PersonServiceException("connection error", e);
         } catch (HttpResponseException e) {
             throw new PersonServiceException("HTTP response error", e);
         } catch (PersonConstructorException e) {
             throw new PersonServiceException("unable to construct Person", e);
-        } catch (IOException e) {
-            throw new PersonServiceException(e.getMessage(), e);
         }
         return modifiedPerson.toString();
     }
