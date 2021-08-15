@@ -5,7 +5,7 @@ import com.prokopovich.persondata.util.exception.InvalidDataException;
 import com.prokopovich.persondata.util.exception.PersonConstructorException;
 import com.prokopovich.persondata.util.parser.PersonParser;
 import com.prokopovich.persondata.util.parser.exception.ParserException;
-import com.prokopovich.persondata.util.validator.DefaultModelDataValidator;
+import com.prokopovich.persondata.util.validator.ModelDataValidator;
 import lombok.AllArgsConstructor;
 
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import java.io.InputStream;
 public class DefaultPersonConstructor implements PersonConstructor {
 
     private final PersonParser parser;
-    private final DefaultModelDataValidator validator;
+    private final ModelDataValidator validator;
 
     @Override
     public Person construct(InputStream personIn) {
