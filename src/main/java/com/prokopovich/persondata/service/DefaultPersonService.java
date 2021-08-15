@@ -5,12 +5,12 @@ import com.prokopovich.persondata.service.person.PersonConstructor;
 import com.prokopovich.persondata.service.person.PersonModifier;
 import com.prokopovich.persondata.util.exception.PersonConstructorException;
 import com.prokopovich.persondata.util.exception.PersonServiceException;
+import com.prokopovich.persondata.util.validator.EnteredUrlValidator;
 import com.prokopovich.persondata.webclient.exception.HttpClientException;
 import com.prokopovich.persondata.webclient.exception.HttpResponseException;
-import com.prokopovich.persondata.webclient.validator.DefaultHttpResponseValidator;
-import com.prokopovich.persondata.util.validator.DefaultEnteredUrlValidator;
 import com.prokopovich.persondata.webclient.HttpClient;
 import com.prokopovich.persondata.webclient.HttpResponse;
+import com.prokopovich.persondata.webclient.validator.HttpResponseValidator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,8 +20,8 @@ public class DefaultPersonService implements PersonService {
     private final PersonConstructor personConstructor;
     private final PersonModifier personModifier;
 
-    private final DefaultEnteredUrlValidator urlValidator;
-    private final DefaultHttpResponseValidator responseValidator;
+    private final EnteredUrlValidator urlValidator;
+    private final HttpResponseValidator responseValidator;
 
     @Override
     public String getDataFromUrl(String url) {

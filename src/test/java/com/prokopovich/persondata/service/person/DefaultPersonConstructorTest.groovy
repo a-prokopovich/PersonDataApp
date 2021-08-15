@@ -36,14 +36,17 @@ class DefaultPersonConstructorTest extends Specification {
             def inData = new ByteArrayInputStream("invalid data".getBytes())
 
             1 * parser.parse(inData) >> {
-                throw new ParserException("parser error")
+                throw new ParserException("parsing error")
             }
+
+            def errorMsg = "Unable to construct Person, reason: parsing error"
 
         when:
             personConstructor.construct(inData)
 
         then:
-            thrown(PersonConstructorException)
+            def e = thrown PersonConstructorException
+            e.getMessage() == errorMsg
     }
 
     def "should throw PersonConstructorException in case of catching InvalidDataException"() {
@@ -56,10 +59,13 @@ class DefaultPersonConstructorTest extends Specification {
                 throw new InvalidDataException("invalid data")
             }
 
+            def errorMsg = "Unable to construct Person, reason: invalid data"
+
         when:
             personConstructor.construct(inData)
 
         then:
-            thrown(PersonConstructorException)
+            def e = thrown PersonConstructorException
+            e.getMessage() == errorMsg
     }
 }
