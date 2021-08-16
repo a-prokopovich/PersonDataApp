@@ -6,8 +6,7 @@ public class DefaultPersonModifier implements PersonModifier {
 
     @Override
     public Person modifyToDisplay(Person person) {
-        Person clonePerson = person.clone();
-        clonePerson.setPassportData(null);
-        return clonePerson;
+        person.setPassportData(null);
+        return person;
     }
 }

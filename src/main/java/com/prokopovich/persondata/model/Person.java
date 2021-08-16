@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Person implements Cloneable {
+public class Person {
 
     @JsonProperty(required = true)
     private int id;
@@ -23,14 +23,4 @@ public class Person implements Cloneable {
     private String email;
 
     private PassportData passportData;
-
-
-    @Override
-    public Person clone() {
-        try {
-            return (Person) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

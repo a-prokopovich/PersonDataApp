@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class PassportData implements Cloneable {
+public class PassportData {
 
     @JsonProperty(required = true)
     private int personId;
@@ -20,14 +20,4 @@ public class PassportData implements Cloneable {
 
     @JsonProperty(required = true)
     private String identificationNumber;
-
-
-    @Override
-    public PassportData clone() {
-        try {
-            return (PassportData) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }
