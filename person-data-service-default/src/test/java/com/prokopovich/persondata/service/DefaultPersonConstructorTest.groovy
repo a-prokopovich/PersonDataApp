@@ -17,55 +17,57 @@ class DefaultPersonConstructorTest extends Specification {
 
     def "should return new person in case of valid data"() {
         given:
-        def inData = new ByteArrayInputStream("valid data".getBytes())
-        def person = new Person()
+            def inData = new ByteArrayInputStream("valid data".getBytes())
+            def person = new Person()
 
-        1 * parser.parse(inData) >> person
-        1 * dataValidator.checkPersonData(person)
+            1 * parser.parse(inData) >> person
+            1 * dataValidator.checkPersonData(person)
 
         when:
-        personConstructor.construct(inData)
+            personConstructor.construct(inData)
 
         then:
-        person
-        notThrown(PersonConstructorException)
+            person
+            notThrown(PersonConstructorException)
     }
 
     def "should throw PersonConstructorException in case of catching ParserException"() {
         given:
-        def inData = new ByteArrayInputStream("invalid data".getBytes())
+            def inData = new ByteArrayInputStream("invalid data".getBytes())
 
-        1 * parser.parse(inData) >> {
-            throw new ParserException("parsing error")
-        }
+            1 * parser.parse(inData) >> {
+                throw new ParserException("parsing error")
+            }
 
-        def errorMsg = "Unable to construct Person, reason: parsing error"
+            def errorMsg = "Unable to construct Person, reason: parsing error"
 
         when:
-        personConstructor.construct(inData)
+            personConstructor.construct(inData)
 
         then:
-        def e = thrown PersonConstructorException
-        e.getMessage() == errorMsg
+            def e = thrown PersonConstructorException
+            e.getMessage() == errorMsg
+            e.getCause().getClass() == ParserException
     }
 
     def "should throw PersonConstructorException in case of catching InvalidDataException"() {
         given:
-        def inData = new ByteArrayInputStream("invalid data".getBytes())
-        def person = new Person()
+            def inData = new ByteArrayInputStream("invalid data".getBytes())
+            def person = new Person()
 
-        1 * parser.parse(inData) >> person
-        1 * dataValidator.checkPersonData(person) >> {
-            throw new InvalidDataException("invalid data")
-        }
+            1 * parser.parse(inData) >> person
+            1 * dataValidator.checkPersonData(person) >> {
+                throw new InvalidDataException("invalid data")
+            }
 
-        def errorMsg = "Unable to construct Person, reason: invalid data"
+            def errorMsg = "Unable to construct Person, reason: invalid data"
 
         when:
-        personConstructor.construct(inData)
+            personConstructor.construct(inData)
 
         then:
-        def e = thrown PersonConstructorException
-        e.getMessage() == errorMsg
+            def e = thrown PersonConstructorException
+            e.getMessage() == errorMsg
+            e.getCause().getClass() == InvalidDataException
     }
 }

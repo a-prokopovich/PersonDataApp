@@ -4,29 +4,29 @@ import spock.lang.Specification
 
 class DefaultEnteredUrlValidatorTest extends Specification {
 
-    def enteredUrlValidator = Mock(EnteredUrlValidator)
+    def enteredUrlValidator = new DefaultEnteredUrlValidator()
 
     def "should return true in case of valid url"() {
         given:
-        def url = "https://prokopovich-example.free.beeceptor.com/person/1"
+            def url = "https://prokopovich-example.free.beeceptor.com/person/1"
 
         when:
-        enteredUrlValidator.checkEnteredUrl(url)
+            enteredUrlValidator.checkEnteredUrl(url)
 
         then:
-        true
+            true
     }
 
     def "should return false in case of invalid url"() {
 
         expect:
-        !enteredUrlValidator.checkEnteredUrl(url)
+            !enteredUrlValidator.checkEnteredUrl(url)
 
         where:
-        url << [
-                "not url",
-                "://example.free./person/1",
-                "https://example",
-        ]
+            url << [
+                    "not url",
+                    "://example.free./person/1",
+                    "https://example",
+            ]
     }
 }
