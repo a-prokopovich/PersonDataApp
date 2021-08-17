@@ -22,7 +22,7 @@ class DefaultPersonServiceTest extends Specification {
     def httpResponseValidator = Mock(HttpResponseValidator)
 
     def personService = new DefaultPersonService(httpClient, personConstructor,
-            personModifier, urlValidator, httpResponseValidator);
+            personModifier, urlValidator, httpResponseValidator)
 
     def "should return string with person info in success case"() {
         given:
