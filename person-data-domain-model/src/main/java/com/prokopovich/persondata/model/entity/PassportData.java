@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class PassportData {
 
     @JsonProperty(required = true)
@@ -20,4 +19,12 @@ public class PassportData {
 
     @JsonProperty(required = true)
     private String identificationNumber;
+
+    @Override
+    public String toString() {
+        return "passport data: " +
+            "personId = " + personId +
+            ", passportNumber = " + passportNumber +
+            ", identificationNumber = " + identificationNumber;
+    }
 }

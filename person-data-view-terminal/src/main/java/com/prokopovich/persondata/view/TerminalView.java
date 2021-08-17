@@ -18,17 +18,20 @@ public class TerminalView implements ViewApp {
 
     @Override
     public void displayStartWindow() {
+        LOGGER.trace("displayed start window");
+
         while (true) {
             System.out.print("Enter the URL: ");
-            String urlStr = in.nextLine();
-            LOGGER.info("Entered URL: " + urlStr);
+            String url = in.nextLine();
+
             try {
-                String personInfo = urlService.getDataFromUrl(urlStr);
-                System.out.println("personInfo from URI: \n" + personInfo);
+                String personInfo = urlService.getDataFromUrl(url);
+                System.out.println("personInfo from URL: \n" + personInfo);
             } catch (PersonServiceException e) {
-                LOGGER.error(e.getMessage());
+                LOGGER.error(e.getMessage(), e.getCause());
                 System.out.println("Exception: " + e.getMessage());
             }
+
             System.out.print("\nGet more data from the URL?" +
                     "\n\tYES - 1;" +
                     "\n\tNO - any symbol" +

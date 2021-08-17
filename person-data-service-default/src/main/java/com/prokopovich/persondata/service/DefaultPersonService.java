@@ -13,9 +13,13 @@ import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.response.HttpResponse;
 import com.prokopovich.persondata.webclient.validator.HttpResponseValidator;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @RequiredArgsConstructor
 public class DefaultPersonService implements PersonService {
+
+    private static final Logger LOGGER = LogManager.getLogger(DefaultPersonService.class);
 
     private final HttpClient httpClient;
     private final PersonConstructor personConstructor;
@@ -26,6 +30,8 @@ public class DefaultPersonService implements PersonService {
 
     @Override
     public String getDataFromUrl(String url) {
+        LOGGER.debug("getDataFromUrl method is executed with url = " + url);
+
         Person modifiedPerson;
         try {
             if (!urlValidator.checkEnteredUrl(url)) {
@@ -33,10 +39,12 @@ public class DefaultPersonService implements PersonService {
             }
 
             HttpResponse httpResponse = httpClient.getData(url);
+            LOGGER.debug("received a response from webclient - " + httpResponse);
             responseValidator.checkHttpResponse(httpResponse);
 
             Person person = personConstructor.construct(httpResponse.getBody());
             modifiedPerson = personModifier.modifyToDisplay(person);
+
         } catch (HttpClientException e) {
             throw new PersonServiceException("connection error", e);
         } catch (HttpResponseException e) {

@@ -17,9 +17,14 @@ import com.prokopovich.persondata.service.validator.EnteredUrlValidator;
 import com.prokopovich.persondata.view.TerminalView;
 import com.prokopovich.persondata.webclient.validator.DefaultHttpResponseValidator;
 import com.prokopovich.persondata.webclient.validator.HttpResponseValidator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 
 public class TerminalApp {
+
+    private static final Logger LOGGER = LogManager.getLogger(TerminalApp.class);
+
     public static void main( String[] args )
     {
         final HttpResponseValidator httpResponseValidator = new DefaultHttpResponseValidator();
@@ -37,7 +42,11 @@ public class TerminalApp {
         final PersonService personService = new DefaultPersonService(httpClient, personConstructor,
                 personModifier, urlValidator, httpResponseValidator);
 
+        LOGGER.info("terminal application is started");
+
         TerminalView terminalView = new TerminalView(personService);
         terminalView.displayStartWindow();
+
+        LOGGER.info("terminal application completed successfully");
     }
 }
