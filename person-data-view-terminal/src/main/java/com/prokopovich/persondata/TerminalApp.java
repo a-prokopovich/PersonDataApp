@@ -1,7 +1,5 @@
 package com.prokopovich.persondata;
 
-import com.prokopovich.persondata.model.validator.DefaultModelDataValidator;
-import com.prokopovich.persondata.model.validator.ModelDataValidator;
 import com.prokopovich.persondata.parser.api.PersonParser;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
@@ -25,15 +23,13 @@ public class TerminalApp {
 
     private static final Logger LOGGER = LogManager.getLogger(TerminalApp.class);
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         final HttpResponseValidator httpResponseValidator = new DefaultHttpResponseValidator();
-        final ModelDataValidator modelDataValidator = new DefaultModelDataValidator();
         final EnteredUrlValidator urlValidator = new DefaultEnteredUrlValidator();
 
         final PersonParser parser = new JsonPersonParser();
 
-        final PersonConstructor personConstructor = new DefaultPersonConstructor(parser, modelDataValidator);
+        final PersonConstructor personConstructor = new DefaultPersonConstructor(parser);
         final PersonModifier personModifier = new DefaultPersonModifier();
 
 
