@@ -2,13 +2,22 @@ package com.prokopovich.persondata.model.validator;
 
 import com.prokopovich.persondata.model.exception.InvalidDataException;
 import com.prokopovich.persondata.model.entity.Person;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class PersonValidator {
 
-    private final PhoneValidator phoneValidator = new PhoneValidator();
-    private final EmailValidator emailValidator = new EmailValidator();
-    private final PassportDataValidator passportDataValidator = new PassportDataValidator();
-    private final RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
+    private final PhoneValidator phoneValidator;
+    private final EmailValidator emailValidator;
+    private final PassportDataValidator passportDataValidator;
+    private final RequiredFieldValidator requiredFieldValidator;
+
+    public PersonValidator() {
+        this.phoneValidator = new PhoneValidator();
+        this.emailValidator = new EmailValidator();
+        this.passportDataValidator = new PassportDataValidator();
+        this.requiredFieldValidator = new RequiredFieldValidator();
+    }
 
     public void validate(Person person) {
         if (requiredFieldValidator.containsUnfilledFields(person))  {
@@ -21,10 +30,6 @@ public class PersonValidator {
             throw new InvalidDataException("invalid field with email");
         }
         if (person.getPassportData() != null) {
-            if (person.getPassportData().getPersonId() == 0 ||
-                    person.getId() != person.getPassportData().getPersonId()) {
-                throw new InvalidDataException("invalid field with Passport data (id don't match)");
-            }
             passportDataValidator.validate(person.getPassportData());
         }
     }
