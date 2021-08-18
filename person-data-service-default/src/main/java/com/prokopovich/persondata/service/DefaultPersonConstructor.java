@@ -19,7 +19,12 @@ public class DefaultPersonConstructor implements PersonConstructor {
     private static final Logger LOGGER = LogManager.getLogger(DefaultPersonConstructor.class);
 
     private final PersonParser parser;
-    private final PersonValidator personValidator = new PersonValidator();
+    private final PersonValidator personValidator;
+
+    public DefaultPersonConstructor(PersonParser parser) {
+        this.parser = parser;
+        this.personValidator = new PersonValidator();
+    }
 
     @Override
     public Person construct(InputStream personIn) {

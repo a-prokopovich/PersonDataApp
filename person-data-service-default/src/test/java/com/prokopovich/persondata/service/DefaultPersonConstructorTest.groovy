@@ -2,7 +2,7 @@ package com.prokopovich.persondata.service
 
 import com.prokopovich.persondata.model.entity.Person
 import com.prokopovich.persondata.model.exception.InvalidDataException
-
+import com.prokopovich.persondata.model.validator.PersonValidator
 import com.prokopovich.persondata.parser.api.PersonParser
 import com.prokopovich.persondata.parser.exception.ParserException
 import com.prokopovich.persondata.service.exception.PersonConstructorException
@@ -11,9 +11,9 @@ import spock.lang.Specification
 class DefaultPersonConstructorTest extends Specification {
 
     def parser = Mock(PersonParser)
-    def dataValidator = Mock(ModelDataValidator)
+    def personValidator = Mock(PersonValidator)
 
-    def personConstructor = new DefaultPersonConstructor(parser, dataValidator)
+    def personConstructor = new DefaultPersonConstructor(parser, personValidator)
 
     def "should return new person in case of valid data"() {
         given:
@@ -21,7 +21,7 @@ class DefaultPersonConstructorTest extends Specification {
             def person = new Person()
 
             1 * parser.parse(inData) >> person
-            1 * dataValidator.checkPersonData(person)
+            1 * personValidator.validate(person)
 
         when:
             personConstructor.construct(inData)
@@ -56,7 +56,7 @@ class DefaultPersonConstructorTest extends Specification {
             def person = new Person()
 
             1 * parser.parse(inData) >> person
-            1 * dataValidator.checkPersonData(person) >> {
+            1 * personValidator.validate(person) >> {
                 throw new InvalidDataException("invalid data")
             }
 
