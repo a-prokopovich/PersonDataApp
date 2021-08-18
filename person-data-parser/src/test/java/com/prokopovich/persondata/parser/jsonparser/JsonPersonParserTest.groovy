@@ -30,14 +30,14 @@ class JsonPersonParserTest extends Specification {
 
     //def "should throw ParserException in case of parser error"() {
     //    given:
-    //        def validPersonIn = new ByteArrayInputStream("person valid json".getBytes())
+    //        def invalidPersonIn = "person invalid inputStream"
 //
-    //        new Gson().fromJson("invalid json string", Person.class)
+    //        new Gson().fromJson(invalidPersonIn, Person.class)
 //
     //        def errorMsg = "Unable to parse the InputStream, reason: error of convert InputStream to String"
 //
     //    when:
-    //        jsonPersonParser.parse(validPersonIn)
+    //        jsonPersonParser.parse(invalidPersonIn)
 //
     //    then:
     //        def e = thrown ParserException
