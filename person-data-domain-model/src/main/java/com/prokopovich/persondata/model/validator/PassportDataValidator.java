@@ -10,11 +10,6 @@ public class PassportDataValidator {
     private final PassportNumberValidator passportNumberValidator;
     private final RequiredFieldValidator requiredFieldValidator;
 
-    public PassportDataValidator() {
-        this.passportNumberValidator = new PassportNumberValidator();
-        this.requiredFieldValidator = new RequiredFieldValidator();
-    }
-
     public void validate(PassportData passportData) {
         if (requiredFieldValidator.containsUnfilledFields(passportData))  {
             throw new InvalidDataException("not all required fields are filled");

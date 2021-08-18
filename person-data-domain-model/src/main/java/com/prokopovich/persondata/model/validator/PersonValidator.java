@@ -12,13 +12,6 @@ public class PersonValidator {
     private final PassportDataValidator passportDataValidator;
     private final RequiredFieldValidator requiredFieldValidator;
 
-    public PersonValidator() {
-        this.phoneValidator = new PhoneValidator();
-        this.emailValidator = new EmailValidator();
-        this.passportDataValidator = new PassportDataValidator();
-        this.requiredFieldValidator = new RequiredFieldValidator();
-    }
-
     public void validate(Person person) {
         if (requiredFieldValidator.containsUnfilledFields(person))  {
             throw new InvalidDataException("not all required fields are filled");

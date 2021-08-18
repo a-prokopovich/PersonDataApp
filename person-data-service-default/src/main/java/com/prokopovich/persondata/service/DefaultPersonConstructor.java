@@ -21,11 +21,6 @@ public class DefaultPersonConstructor implements PersonConstructor {
     private final PersonParser parser;
     private final PersonValidator personValidator;
 
-    public DefaultPersonConstructor(PersonParser parser) {
-        this.parser = parser;
-        this.personValidator = new PersonValidator();
-    }
-
     @Override
     public Person construct(InputStream personIn) {
         LOGGER.trace("construct Person method is executed");

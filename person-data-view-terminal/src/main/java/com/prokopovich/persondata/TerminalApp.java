@@ -1,5 +1,11 @@
 package com.prokopovich.persondata;
 
+import com.prokopovich.persondata.model.validator.EmailValidator;
+import com.prokopovich.persondata.model.validator.PassportDataValidator;
+import com.prokopovich.persondata.model.validator.PassportNumberValidator;
+import com.prokopovich.persondata.model.validator.PersonValidator;
+import com.prokopovich.persondata.model.validator.PhoneValidator;
+import com.prokopovich.persondata.model.validator.RequiredFieldValidator;
 import com.prokopovich.persondata.parser.api.PersonParser;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
@@ -24,12 +30,21 @@ public class TerminalApp {
     private static final Logger LOGGER = LogManager.getLogger(TerminalApp.class);
 
     public static void main( String[] args ) {
+
+        final PassportNumberValidator passportNumberValidator = new PassportNumberValidator();
+        final RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
+        final PhoneValidator phoneValidator = new PhoneValidator();
+        final EmailValidator emailValidator = new EmailValidator();
+
+        final PassportDataValidator passportDataValidator = new PassportDataValidator(passportNumberValidator, requiredFieldValidator);
+        final PersonValidator personValidator = new PersonValidator(phoneValidator, emailValidator, passportDataValidator, requiredFieldValidator);
+
         final HttpResponseValidator httpResponseValidator = new DefaultHttpResponseValidator();
         final EnteredUrlValidator urlValidator = new DefaultEnteredUrlValidator();
 
         final PersonParser parser = new JsonPersonParser();
 
-        final PersonConstructor personConstructor = new DefaultPersonConstructor(parser);
+        final PersonConstructor personConstructor = new DefaultPersonConstructor(parser, personValidator);
         final PersonModifier personModifier = new DefaultPersonModifier();
 
 
