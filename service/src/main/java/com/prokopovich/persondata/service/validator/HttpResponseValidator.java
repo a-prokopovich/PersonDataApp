@@ -1,6 +1,6 @@
-package com.prokopovich.persondata.webclient.validator;
+package com.prokopovich.persondata.service.validator;
 
-import com.prokopovich.persondata.webclient.exception.HttpResponseException;
+import com.prokopovich.persondata.service.exception.HttpResponseException;
 import com.prokopovich.persondata.webclient.response.HttpResponse;
 
 public interface HttpResponseValidator {

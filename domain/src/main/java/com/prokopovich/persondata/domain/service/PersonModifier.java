@@ -4,5 +4,5 @@ import com.prokopovich.persondata.domain.model.Person;
 
 public interface PersonModifier {
 
-    Person modifyToDisplay(Person person);
+    Person modify(Person person);
 }

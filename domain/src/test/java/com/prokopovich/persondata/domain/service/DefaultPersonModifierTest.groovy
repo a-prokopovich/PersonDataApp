@@ -11,14 +11,17 @@ class DefaultPersonModifierTest extends Specification {
 
     def "should return person with null passportData"() {
         given:
-            def person = new Person(1, "Ivan", "100", "i@i.net", new PassportData(1, "HB3452345","7548564A001PB5"))
+            def passportData = new PassportData(1, "HB3452345","7548564A001PB5")
+            def id = 1
+            def fullName = "Ivan Ivanov"
+            def phone = "80291234567"
+            def email = "i@i.net"
 
-            def expectedPerson = new Person(1, "Ivan", "100", "i@i.net", null)
-
+            def originalPerson = new Person(id, fullName, phone, email, passportData)
         when:
-            def result = personModifier.modifyToDisplay(person)
+            def result = personModifier.modify(originalPerson)
 
         then:
-            result == expectedPerson
+            result == new Person(id, fullName, phone, email, null)
     }
 }

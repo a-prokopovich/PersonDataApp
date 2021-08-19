@@ -7,14 +7,15 @@ class DefaultEnteredUrlValidatorTest extends Specification {
     def enteredUrlValidator = new DefaultInUrlValidator()
 
     def "should return true in case of valid url"() {
-        given:
-            def url = "https://prokopovich-example.free.beeceptor.com/person/1"
 
-        when:
+        expect:
             enteredUrlValidator.checkEnteredUrl(url)
 
-        then:
-            true
+        where:
+            url << [
+                "https://prokopovich-example.free.beeceptor.com/person/1",
+                "http://prokopovich-example.free.beeceptor.com/person/1"
+            ]
     }
 
     def "should return false in case of invalid url"() {
@@ -27,6 +28,7 @@ class DefaultEnteredUrlValidatorTest extends Specification {
                     "not url",
                     "://example.free./person/1",
                     "https://example",
+                    "file://example.free.com/person/1"
             ]
     }
 }

@@ -1,9 +1,7 @@
-package com.prokopovich.persondata.webclient.validator;
+package com.prokopovich.persondata.service.validator;
 
-import com.prokopovich.persondata.webclient.exception.HttpResponseException;
+import com.prokopovich.persondata.service.exception.HttpResponseException;
 import com.prokopovich.persondata.webclient.response.HttpResponse;
-
-import java.io.IOException;
 
 public class DefaultHttpResponseValidator implements HttpResponseValidator {
 
@@ -16,13 +14,7 @@ public class DefaultHttpResponseValidator implements HttpResponseValidator {
             throw new HttpResponseException("HTTP server error");
         }
         if (httpResponse.getStatusCode() == 200) {
-            try {
-                if (httpResponse.getBody().available() == 0) {
-                    throw new HttpResponseException("Response body is empty");
-                }
-            } catch (IOException e) {
-                throw new HttpResponseException("Exception with InputStream in method available()");
-            }
+            if (httpResponse.getBody() == null) throw new HttpResponseException("Response body is empty");
         }
     }
 }

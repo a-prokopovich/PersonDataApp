@@ -4,11 +4,11 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 public class DefaultInUrlValidator implements InUrlValidator {
 
-    static String[] schemes = {"http", "https"};
-    static UrlValidator urlValidator = new UrlValidator(schemes);
+    private static final String[] SCHEMES = {"http", "https"};
+    private static final UrlValidator URL_VALIDATOR = new UrlValidator(SCHEMES);
 
     @Override
     public boolean checkEnteredUrl(String url) {
-        return urlValidator.isValid(url);
+        return URL_VALIDATOR.isValid(url);
     }
 }

@@ -7,7 +7,7 @@ class PassportNumberValidatorTest extends Specification {
 
     def passportNumberValidator = new PassportNumberValidator()
 
-    def "should return true in case of valid passportNumber"() {
+    def "should return true in case of valid passport number"() {
         expect:
             passportNumberValidator.isValid(passportNumber)
 
@@ -25,7 +25,7 @@ class PassportNumberValidatorTest extends Specification {
             ]
     }
 
-    def "should return false in case of invalid passportNumber"() {
+    def "should return false in case of invalid passport number"() {
         expect:
             !passportNumberValidator.isValid(passportNumber)
 

@@ -5,33 +5,24 @@ import com.google.gson.JsonSyntaxException;
 import com.prokopovich.persondata.parser.api.PersonParser;
 import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.parser.exception.ParserException;
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
+@Slf4j
 public class JsonPersonParser implements PersonParser {
 
-    private static final Logger LOGGER = LogManager.getLogger(JsonPersonParser.class);
-
     @Override
-    public Person parse(InputStream personIn) {
-        LOGGER.trace("InputStream parse is executed");
+    public Person parse(byte[] personIn) {
 
-        String personText;
-        Person person;
+        log.info("Parsing byte array ro person: {}", Arrays.toString(personIn));
 
         try {
-            personText = IOUtils.toString(personIn, StandardCharsets.UTF_8.name());
-            person = new Gson().fromJson(personText, Person.class);
+            return new Gson().fromJson(
+                new String(personIn),
+                Person.class);
         } catch (JsonSyntaxException e) {
             throw new ParserException(e.getMessage());
-        } catch (IOException e) {
-            throw new ParserException("error of convert InputStream to String");
         }
-        return person;
     }
 }

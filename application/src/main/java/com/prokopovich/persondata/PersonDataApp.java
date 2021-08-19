@@ -19,8 +19,8 @@ import com.prokopovich.persondata.service.validator.InUrlValidator;
 import com.prokopovich.persondata.view.terminal.TerminalView;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
-import com.prokopovich.persondata.webclient.validator.DefaultHttpResponseValidator;
-import com.prokopovich.persondata.webclient.validator.HttpResponseValidator;
+import com.prokopovich.persondata.service.validator.DefaultHttpResponseValidator;
+import com.prokopovich.persondata.service.validator.HttpResponseValidator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,11 +50,11 @@ public class PersonDataApp {
         final PersonService personService = new DefaultPersonService(httpClient, personConstructor,
             personModifier, urlValidator, httpResponseValidator);
 
-        log.info("application is started");
+        log.info("Application is started");
 
         TerminalView terminalView = new TerminalView(personService);
         terminalView.displayStartWindow();
 
-        log.info("application completed successfully");
+        log.info("Application completed successfully");
     }
 }

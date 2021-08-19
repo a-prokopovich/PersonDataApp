@@ -40,7 +40,7 @@ class PassportDataValidatorTest extends Specification {
             e.getMessage() == "Invalid data, reason: not all required fields are filled"
     }
 
-    def "should throw InvalidDataException in case of invalid passportNumber"() {
+    def "should throw InvalidDataException in case of invalid passport number"() {
         given:
             requiredFieldValidator.containsUnfilledFields(passportData) >> false
             passportNumberValidator.isValid(passportData.passportNumber) >> false

@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class Person {
 
     @JsonProperty(required = true)
@@ -29,10 +28,10 @@ public class Person {
             "id = " + id +
             ", fullName = " + fullName +
             ", phone = " + phone +
-            ", email = " + email + "; ";
-        if (passportData != null) {
-            result += passportData.toString();
-        }
+            ", email = " + email + ", " + passportData;
+        //result += (passportData != null) ?
+        //    passportData.toString() :
+        //    "passportData = null";
         return result;
     }
 }
