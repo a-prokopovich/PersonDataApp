@@ -1,11 +1,6 @@
-package com.prokopovich.persondata.validator
+package com.prokopovich.persondata.domain.validator
 
 import com.prokopovich.persondata.domain.model.Person
-import com.prokopovich.persondata.domain.validator.PersonValidator
-import com.prokopovich.persondata.domain.validator.PhoneValidator
-import com.prokopovich.persondata.domain.validator.EmailValidator
-import com.prokopovich.persondata.domain.validator.RequiredFieldValidator
-import com.prokopovich.persondata.domain.validator.PassportDataValidator
 import com.prokopovich.persondata.domain.exception.InvalidDataException
 import spock.lang.Specification
 
@@ -41,7 +36,7 @@ class PersonValidatorTest extends Specification {
 
         then:
             def e = thrown InvalidDataException
-            e.getMessage() == "Invalid data, reason: not all required fields are filled"
+            e.getMessage().contains("not all required fields are filled")
     }
 
     def "should throw InvalidDataException in case of invalid phone"() {
@@ -54,7 +49,7 @@ class PersonValidatorTest extends Specification {
 
         then:
             def e = thrown InvalidDataException
-            e.getMessage() == "Invalid data, reason: invalid field with phone number"
+            e.getMessage().contains("invalid field with phone number")
     }
 
     def "should throw InvalidDataException in case of invalid email"() {
@@ -68,6 +63,6 @@ class PersonValidatorTest extends Specification {
 
         then:
             def e = thrown InvalidDataException
-            e.getMessage() == "Invalid data, reason: invalid field with email"
+            e.getMessage().contains("invalid field with email")
     }
 }

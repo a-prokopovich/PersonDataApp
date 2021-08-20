@@ -57,7 +57,7 @@ class DefaultPersonServiceTest extends Specification {
             personService.getByUrl(url)
 
         then:
-            def e = thrown PersonServiceException
+            thrown PersonServiceException
     }
 
     def "should throw PersonServiceException in case of connection error by url"() {
@@ -74,6 +74,7 @@ class DefaultPersonServiceTest extends Specification {
 
         then:
             def e = thrown PersonServiceException
+            e.getMessage().contains("connection error")
             e.getCause().getClass() == HttpClientException
     }
 
@@ -95,6 +96,7 @@ class DefaultPersonServiceTest extends Specification {
 
         then:
             def e = thrown PersonServiceException
+            e.getMessage().contains("HTTP response error")
             e.getCause().getClass() == HttpResponseException
     }
 
@@ -118,6 +120,7 @@ class DefaultPersonServiceTest extends Specification {
 
         then:
             def e = thrown PersonServiceException
+            e.getMessage().contains("unable to construct Person")
             e.getCause().getClass() == PersonConstructorException
     }
 }

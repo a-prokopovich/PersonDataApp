@@ -2,7 +2,7 @@ package com.prokopovich.persondata.service.validator
 
 import spock.lang.Specification
 
-class DefaultEnteredUrlValidatorTest extends Specification {
+class DefaultInUrlValidatorTest extends Specification {
 
     def enteredUrlValidator = new DefaultInUrlValidator()
 

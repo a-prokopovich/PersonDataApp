@@ -2,13 +2,18 @@ package com.prokopovich.persondata.domain.validator;
 
 import com.prokopovich.persondata.domain.model.PassportData;
 import com.prokopovich.persondata.domain.exception.InvalidDataException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PassportDataValidator {
 
     private final PassportNumberValidator passportNumberValidator;
     private final RequiredFieldValidator requiredFieldValidator;
+
+    public PassportDataValidator() {
+        passportNumberValidator = new PassportNumberValidator();
+        requiredFieldValidator = new RequiredFieldValidator();
+    }
 
     public void validate(PassportData passportData) {
         if (requiredFieldValidator.containsUnfilledFields(passportData))  {

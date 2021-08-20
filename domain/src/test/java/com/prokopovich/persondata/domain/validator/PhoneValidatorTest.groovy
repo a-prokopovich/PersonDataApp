@@ -1,6 +1,5 @@
-package com.prokopovich.persondata.validator
+package com.prokopovich.persondata.domain.validator
 
-import com.prokopovich.persondata.domain.validator.PhoneValidator
 import spock.lang.Specification
 
 class PhoneValidatorTest extends Specification {

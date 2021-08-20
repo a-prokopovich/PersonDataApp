@@ -1,8 +1,7 @@
-package com.prokopovich.persondata.validator
+package com.prokopovich.persondata.domain.validator
 
 import com.prokopovich.persondata.domain.model.PassportData
 import com.prokopovich.persondata.domain.model.Person
-import com.prokopovich.persondata.domain.validator.RequiredFieldValidator
 import spock.lang.Specification
 
 class RequiredFieldValidatorTest extends Specification {

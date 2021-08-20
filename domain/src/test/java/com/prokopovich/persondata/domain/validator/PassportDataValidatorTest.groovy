@@ -1,10 +1,7 @@
-package com.prokopovich.persondata.validator
+package com.prokopovich.persondata.domain.validator
 
 import com.prokopovich.persondata.domain.model.PassportData;
 import com.prokopovich.persondata.domain.exception.InvalidDataException
-import com.prokopovich.persondata.domain.validator.PassportDataValidator
-import com.prokopovich.persondata.domain.validator.RequiredFieldValidator
-import com.prokopovich.persondata.domain.validator.PassportNumberValidator
 
 import spock.lang.Specification
 
@@ -37,7 +34,7 @@ class PassportDataValidatorTest extends Specification {
 
         then:
             def e = thrown InvalidDataException
-            e.getMessage() == "Invalid data, reason: not all required fields are filled"
+            e.getMessage().contains("not all required fields are filled")
     }
 
     def "should throw InvalidDataException in case of invalid passport number"() {
@@ -50,6 +47,6 @@ class PassportDataValidatorTest extends Specification {
 
         then:
             def e = thrown InvalidDataException
-            e.getMessage() == "Invalid data, reason: invalid field with passportNumber"
+            e.getMessage().contains("invalid field with passportNumber")
     }
 }

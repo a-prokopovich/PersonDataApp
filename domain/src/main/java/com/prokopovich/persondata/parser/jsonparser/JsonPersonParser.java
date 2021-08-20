@@ -7,7 +7,6 @@ import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.parser.exception.ParserException;
 
 import lombok.extern.slf4j.Slf4j;
-import java.util.Arrays;
 
 @Slf4j
 public class JsonPersonParser implements PersonParser {
@@ -15,7 +14,7 @@ public class JsonPersonParser implements PersonParser {
     @Override
     public Person parse(byte[] personIn) {
 
-        log.info("Parsing byte array ro person: {}", Arrays.toString(personIn));
+        log.info("Parsing byte array ro person: {}", new String(personIn));
 
         try {
             return new Gson().fromJson(

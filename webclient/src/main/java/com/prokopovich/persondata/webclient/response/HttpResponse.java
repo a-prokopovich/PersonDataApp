@@ -3,12 +3,6 @@ package com.prokopovich.persondata.webclient.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.io.InputStream;
-import java.util.Arrays;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +17,6 @@ public class HttpResponse {
     public String toString() {
         return "HttpResponse: " +
             "statusCode = " + statusCode +
-            "body = " + Arrays.toString(body) + ';';
+            ", body = " + new String(body) + ';';
     }
 }

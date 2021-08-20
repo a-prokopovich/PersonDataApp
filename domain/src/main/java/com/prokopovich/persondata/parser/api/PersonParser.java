@@ -3,8 +3,6 @@ package com.prokopovich.persondata.parser.api;
 import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.parser.exception.ParserException;
 
-import java.io.InputStream;
-
 public interface PersonParser {
 
     /**

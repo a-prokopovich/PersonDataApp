@@ -1,8 +1,7 @@
-package com.prokopovich.persondata.service
+package com.prokopovich.persondata.domain.service
 
 import com.prokopovich.persondata.domain.model.PassportData
 import com.prokopovich.persondata.domain.model.Person
-import com.prokopovich.persondata.domain.service.DefaultPersonModifier;
 import spock.lang.Specification
 
 class DefaultPersonModifierTest extends Specification {

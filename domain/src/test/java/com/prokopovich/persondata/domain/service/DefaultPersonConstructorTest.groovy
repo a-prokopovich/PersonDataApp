@@ -1,9 +1,8 @@
-package com.prokopovich.persondata.service
+package com.prokopovich.persondata.domain.service
 
 import com.prokopovich.persondata.domain.exception.InvalidDataException
 import com.prokopovich.persondata.domain.model.Person
-import com.prokopovich.persondata.domain.service.DefaultPersonConstructor
-import com.prokopovich.persondata.domain.exception.PersonConstructorException;
+import com.prokopovich.persondata.domain.exception.PersonConstructorException
 import com.prokopovich.persondata.domain.validator.PersonValidator
 import com.prokopovich.persondata.parser.api.PersonParser
 import com.prokopovich.persondata.parser.exception.ParserException
@@ -18,7 +17,7 @@ class DefaultPersonConstructorTest extends Specification {
 
     def "should return new person in case of valid data"() {
         given:
-            def inData = new byte[] {"valid data".getBytes()}
+            def inData = "valid data".getBytes()
             def person = new Person()
 
             1 * parser.parse(inData) >> person
@@ -34,7 +33,7 @@ class DefaultPersonConstructorTest extends Specification {
 
     def "should throw PersonConstructorException in case of exception during parsing"() {
         given:
-            def inData = new byte[] {"invalid data".getBytes()}
+            def inData = "invalid data".getBytes()
 
             1 * parser.parse(inData) >> {
                 throw new ParserException("parsing error")
@@ -45,13 +44,13 @@ class DefaultPersonConstructorTest extends Specification {
 
         then:
             def e = thrown PersonConstructorException
-            e.getMessage() == "Unable to construct Person, reason: parsing error"
+            e.getMessage().contains("parsing error")
             e.getCause().getClass() == ParserException
     }
 
     def "should throw PersonConstructorException in case of got invalid data"() {
         given:
-            def inData = new byte[] {"invalid data".getBytes()}
+            def inData = "invalid data".getBytes()
             def person = new Person()
 
             1 * parser.parse(inData) >> person
@@ -64,7 +63,7 @@ class DefaultPersonConstructorTest extends Specification {
 
         then:
             def e = thrown PersonConstructorException
-            e.getMessage() == "Unable to construct Person, reason: invalid data"
+            e.getMessage().contains("invalid data")
             e.getCause().getClass() == InvalidDataException
     }
 }
