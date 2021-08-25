@@ -16,7 +16,7 @@ class PersonValidatorTest extends Specification {
 
     def "should not throw exception in case of Person contains valid data"() {
         given:
-            1 * requiredFieldValidator.containsUnfilledFields(person) >> false
+            1 * requiredFieldValidator.containsUnfilledFields(person) >> true  // false
             1 * phoneValidator.isValid(person.getPhone()) >> true
             1 * emailValidator.isValid(person.getEmail()) >> true
 

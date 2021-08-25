@@ -20,5 +20,6 @@
     <modules>
         <module>api</module>
         <module>terminal</module>
+        <module>servlet</module>
     </modules>
 </project>
