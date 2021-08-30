@@ -4,11 +4,7 @@
     <title>Person Data</title>
 </head>
 <body>
-    <h2 class="addInf">Get Person data by URL</h2>
-    <form action="data" method="POST" autocomplete="off">
-        <p>Enter URL: <input type="text" name="url"/></p>
-        <input type="submit" value="SEND"/>
-    </form>
+    <h2 class="addInf">Person List</h2>
     <br>
     <div> <if ${id != null}>
         <h3>Person details: </h3>
@@ -20,4 +16,3 @@
     <br>
     <div> <p>${message}</p> </div>
 </body>
-</html>

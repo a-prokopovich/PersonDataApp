@@ -21,7 +21,6 @@ import com.prokopovich.persondata.service.validator.HttpResponseValidator;
 import com.prokopovich.persondata.service.validator.InUrlValidator;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -31,8 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Slf4j
-@WebServlet("/data")
+@WebServlet("/persons")
 public class ServletView extends HttpServlet {
 
     @Override
@@ -73,8 +71,6 @@ public class ServletView extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-
-        response.setContentType("text/html");
 
         var url = request.getParameter("url");
         request.setAttribute("url", url);
