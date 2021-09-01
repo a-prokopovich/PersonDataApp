@@ -24,14 +24,11 @@ public class Person {
 
     @Override
     public String toString() {
-        String result = "Person: " +
+        return "Person: " +
             "id = " + id +
             ", fullName = " + fullName +
             ", phone = " + phone +
-            ", email = " + email + ", " + passportData;
-        //result += (passportData != null) ?
-        //    passportData.toString() :
-        //    "passportData = null";
-        return result;
+            ", email = " + email +
+            ", " + passportData;
     }
 }

@@ -4,4 +4,60 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <servlet>
+        <servlet-name>Initialization</servlet-name>
+        <servlet-class>com.prokopovich.persondata.view.servlet.InitializationServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Persons</servlet-name>
+        <servlet-class>com.prokopovich.persondata.view.servlet.DelegateHttpServlet</servlet-class>
+
+        <init-param>
+            <param-name>servletContextKey</param-name>
+            <param-value>personsServlet</param-value>
+        </init-param>
+
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PersonDetail</servlet-name>
+        <servlet-class>com.prokopovich.persondata.view.servlet.DelegateHttpServlet</servlet-class>
+
+        <init-param>
+            <param-name>servletContextKey</param-name>
+            <param-value>personDetailServlet</param-value>
+        </init-param>
+
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Health</servlet-name>
+        <servlet-class>com.prokopovich.persondata.view.servlet.DelegateHttpServlet</servlet-class>
+
+        <init-param>
+            <param-name>servletContextKey</param-name>
+            <param-value>healthServlet</param-value>
+        </init-param>
+
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Persons</servlet-name>
+        <url-pattern>/persons</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PersonDetail</servlet-name>
+        <url-pattern>/persons/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Health</servlet-name>
+        <url-pattern>/health</url-pattern>
+    </servlet-mapping>
 </web-app>

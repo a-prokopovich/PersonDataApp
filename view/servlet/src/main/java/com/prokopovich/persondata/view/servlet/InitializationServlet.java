@@ -1,7 +1,8 @@
-package com.prokopovich.persondata;
+package com.prokopovich.persondata.view.servlet;
 
 import com.prokopovich.persondata.cache.PersonListCache;
 import com.prokopovich.persondata.domain.service.DefaultPersonConstructor;
+import com.prokopovich.persondata.domain.service.DefaultPersonModifier;
 import com.prokopovich.persondata.domain.validator.EmailValidator;
 import com.prokopovich.persondata.domain.validator.PassportDataValidator;
 import com.prokopovich.persondata.domain.validator.PassportNumberValidator;
@@ -9,18 +10,29 @@ import com.prokopovich.persondata.domain.validator.PersonValidator;
 import com.prokopovich.persondata.domain.validator.PhoneValidator;
 import com.prokopovich.persondata.domain.validator.RequiredFieldValidator;
 import com.prokopovich.persondata.parser.jsonparser.JsonPersonParser;
-import com.prokopovich.persondata.domain.service.DefaultPersonModifier;
 import com.prokopovich.persondata.service.DefaultPersonService;
-import com.prokopovich.persondata.service.validator.DefaultInUrlValidator;
-import com.prokopovich.persondata.view.terminal.TerminalView;
-import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
+import com.prokopovich.persondata.service.PersonService;
 import com.prokopovich.persondata.service.validator.DefaultHttpResponseValidator;
-import lombok.extern.slf4j.Slf4j;
+import com.prokopovich.persondata.service.validator.DefaultInUrlValidator;
+import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
 
-@Slf4j
-public class PersonDataApp {
+public class InitializationServlet extends HealthServlet {
 
-    public static void main( String[] args ) {
+    @Override
+    public void init() {
+
+        var personService = initialisePersonService();
+
+        var personsServlet = new PersonsServlet(personService);
+        var personDetailServlet = new PersonDetailServlet(personService);
+        var healthServlet = new HealthServlet();
+
+        getServletContext().setAttribute("personsServlet", personsServlet);
+        getServletContext().setAttribute("personDetailServlet", personDetailServlet);
+        getServletContext().setAttribute("healthServlet", healthServlet);
+    }
+
+    private PersonService initialisePersonService() {
 
         final var passportNumberValidator = new PassportNumberValidator();
         final var requiredFieldValidator = new RequiredFieldValidator();
@@ -38,18 +50,10 @@ public class PersonDataApp {
         final var personConstructor = new DefaultPersonConstructor(parser, personValidator);
         final var personModifier = new DefaultPersonModifier();
 
-
+        final PersonListCache personList = new PersonListCache(3);
         final var httpClient = new DefaultHttpClient();
-        final var personList = new PersonListCache(3);
 
-        final var personService = new DefaultPersonService(httpClient, personConstructor,
+        return new DefaultPersonService(httpClient, personConstructor,
             personModifier, personValidator, urlValidator, httpResponseValidator, personList);
-
-        log.info("Application is started");
-
-        TerminalView terminalView = new TerminalView(personService);
-        terminalView.displayStartWindow();
-
-        log.info("Application completed successfully");
     }
 }
