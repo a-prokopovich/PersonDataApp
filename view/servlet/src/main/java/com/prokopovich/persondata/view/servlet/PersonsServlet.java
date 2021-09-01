@@ -7,6 +7,8 @@ import com.prokopovich.persondata.view.servlet.data.MessageResponse;
 import com.prokopovich.persondata.view.servlet.data.UrlRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +21,12 @@ import java.io.IOException;
 public class PersonsServlet extends HttpServlet {
 
     private final PersonService personService;
+    //private static final Logger log = LogManager.getLogger(PersonsServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        log.info("HELLOOOO");
 
         response.setContentType("application/json;charset=UTF-8");
         var writer = response.getWriter();
