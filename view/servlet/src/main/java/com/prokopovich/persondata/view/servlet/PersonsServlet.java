@@ -26,6 +26,8 @@ public class PersonsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        log.info("HELLO");
+
         response.setContentType("application/json;charset=UTF-8");
         var writer = response.getWriter();
 
