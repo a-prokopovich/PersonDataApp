@@ -6,7 +6,6 @@ import com.prokopovich.persondata.view.servlet.wrapper.stream.GZIPResponseStream
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -49,23 +48,14 @@ public class ServletResponseWrapper extends HttpServletResponseWrapper {
     }
 
     public void flushBuffer() throws IOException {
-        stream.flush();
-    }
-
-
-    public PrintWriter getWriter() throws IOException {
 
         if (writer != null) {
-            return writer;
+            writer.flush();
         }
 
         if (stream != null) {
-            throw new IllegalStateException("getOutputStream() has already been called!");
+            stream.flush();
         }
-
-        stream = createOutputStream();
-        writer = new PrintWriter(new OutputStreamWriter(stream, StandardCharsets.UTF_8));
-        return writer;
     }
 
     public ServletOutputStream getOutputStream() throws IOException {
@@ -74,8 +64,21 @@ public class ServletResponseWrapper extends HttpServletResponseWrapper {
             throw new IllegalStateException("printWriter already defined");
         }
 
-        if (stream == null)
+        if (stream == null) {
             stream = createOutputStream();
+        }
         return stream;
+    }
+
+    public PrintWriter getWriter() throws IOException {
+
+        if (stream != null) {
+            throw new IllegalStateException("getOutputStream() has already been called!");
+        }
+        if (writer == null) {
+            stream = createOutputStream();
+            writer = new PrintWriter(new OutputStreamWriter(stream, StandardCharsets.UTF_8));
+        }
+        return writer;
     }
 }

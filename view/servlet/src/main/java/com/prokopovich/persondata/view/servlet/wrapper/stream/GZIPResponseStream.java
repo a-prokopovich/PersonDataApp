@@ -32,6 +32,18 @@ public class GZIPResponseStream extends ServletOutputStream {
     }
 
     @Override
+    public void close() throws IOException {
+        if (gzipStream != null) {
+            gzipStream.close();
+        }
+    }
+
+    @Override
+    public void flush() throws IOException {
+        gzipStream.flush();
+    }
+
+    @Override
     public boolean isReady() {
         return false;
     }
