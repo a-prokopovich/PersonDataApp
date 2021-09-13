@@ -1,7 +1,7 @@
 package com.prokopovich.persondata.view.terminal;
 
-import com.prokopovich.persondata.service.PersonService;
-import com.prokopovich.persondata.service.exception.PersonServiceException;
+import com.prokopovich.persondata.domain.service.PersonService;
+import com.prokopovich.persondata.domain.exception.PersonServiceException;
 import com.prokopovich.persondata.view.View;
 
 import lombok.RequiredArgsConstructor;

@@ -1,26 +1,26 @@
 package com.prokopovich.persondata;
 
-import com.prokopovich.persondata.cache.PersonListCache;
-import com.prokopovich.persondata.domain.service.DefaultPersonConstructor;
-import com.prokopovich.persondata.domain.validator.EmailValidator;
-import com.prokopovich.persondata.domain.validator.PassportDataValidator;
-import com.prokopovich.persondata.domain.validator.PassportNumberValidator;
-import com.prokopovich.persondata.domain.validator.PersonValidator;
-import com.prokopovich.persondata.domain.validator.PhoneValidator;
-import com.prokopovich.persondata.domain.validator.RequiredFieldValidator;
-import com.prokopovich.persondata.parser.jsonparser.JsonPersonParser;
-import com.prokopovich.persondata.domain.service.DefaultPersonModifier;
-import com.prokopovich.persondata.service.DefaultPersonService;
-import com.prokopovich.persondata.service.validator.DefaultInUrlValidator;
+import com.prokopovich.persondata.domain.cache.PersonListCache;
+import com.prokopovich.persondata.domain.service.constructor.DefaultPersonConstructor;
+import com.prokopovich.persondata.domain.service.modifier.DefaultPersonModifier;
+import com.prokopovich.persondata.domain.validator.person.EmailValidator;
+import com.prokopovich.persondata.domain.validator.person.PassportDataValidator;
+import com.prokopovich.persondata.domain.validator.person.PassportNumberValidator;
+import com.prokopovich.persondata.domain.validator.person.PersonValidator;
+import com.prokopovich.persondata.domain.validator.person.PhoneValidator;
+import com.prokopovich.persondata.domain.validator.person.RequiredFieldValidator;
+import com.prokopovich.persondata.domain.service.parser.JsonPersonParser;
+import com.prokopovich.persondata.domain.service.DefaultPersonService;
+import com.prokopovich.persondata.domain.validator.httpresponse.DefaultHttpResponseValidator;
+import com.prokopovich.persondata.domain.validator.inurl.DefaultInUrlValidator;
 import com.prokopovich.persondata.view.terminal.TerminalView;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
-import com.prokopovich.persondata.service.validator.DefaultHttpResponseValidator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class PersonDataApp {
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
 
         final var passportNumberValidator = new PassportNumberValidator();
         final var requiredFieldValidator = new RequiredFieldValidator();
@@ -38,7 +38,6 @@ public class PersonDataApp {
         final var personConstructor = new DefaultPersonConstructor(parser, personValidator);
         final var personModifier = new DefaultPersonModifier();
 
-
         final var httpClient = new DefaultHttpClient();
         final var personList = new PersonListCache(3);
 
@@ -47,8 +46,8 @@ public class PersonDataApp {
 
         log.info("Application is started");
 
-        TerminalView terminalView = new TerminalView(personService);
-        terminalView.displayStartWindow();
+        var terminalView = new TerminalView(personService);
+        //terminalView.displayStartWindow();
 
         log.info("Application completed successfully");
     }

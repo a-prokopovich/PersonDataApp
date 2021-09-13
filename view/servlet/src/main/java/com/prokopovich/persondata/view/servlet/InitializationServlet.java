@@ -1,19 +1,19 @@
 package com.prokopovich.persondata.view.servlet;
 
-import com.prokopovich.persondata.cache.PersonListCache;
-import com.prokopovich.persondata.domain.service.DefaultPersonConstructor;
-import com.prokopovich.persondata.domain.service.DefaultPersonModifier;
-import com.prokopovich.persondata.domain.validator.EmailValidator;
-import com.prokopovich.persondata.domain.validator.PassportDataValidator;
-import com.prokopovich.persondata.domain.validator.PassportNumberValidator;
-import com.prokopovich.persondata.domain.validator.PersonValidator;
-import com.prokopovich.persondata.domain.validator.PhoneValidator;
-import com.prokopovich.persondata.domain.validator.RequiredFieldValidator;
-import com.prokopovich.persondata.parser.jsonparser.JsonPersonParser;
-import com.prokopovich.persondata.service.DefaultPersonService;
-import com.prokopovich.persondata.service.PersonService;
-import com.prokopovich.persondata.service.validator.DefaultHttpResponseValidator;
-import com.prokopovich.persondata.service.validator.DefaultInUrlValidator;
+import com.prokopovich.persondata.domain.cache.PersonListCache;
+import com.prokopovich.persondata.domain.service.PersonService;
+import com.prokopovich.persondata.domain.service.constructor.DefaultPersonConstructor;
+import com.prokopovich.persondata.domain.service.modifier.DefaultPersonModifier;
+import com.prokopovich.persondata.domain.validator.person.EmailValidator;
+import com.prokopovich.persondata.domain.validator.person.PassportDataValidator;
+import com.prokopovich.persondata.domain.validator.person.PassportNumberValidator;
+import com.prokopovich.persondata.domain.validator.person.PersonValidator;
+import com.prokopovich.persondata.domain.validator.person.PhoneValidator;
+import com.prokopovich.persondata.domain.validator.person.RequiredFieldValidator;
+import com.prokopovich.persondata.domain.service.parser.JsonPersonParser;
+import com.prokopovich.persondata.domain.service.DefaultPersonService;
+import com.prokopovich.persondata.domain.validator.httpresponse.DefaultHttpResponseValidator;
+import com.prokopovich.persondata.domain.validator.inurl.DefaultInUrlValidator;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
 
 public class InitializationServlet extends HealthServlet {
@@ -50,7 +50,7 @@ public class InitializationServlet extends HealthServlet {
         final var personConstructor = new DefaultPersonConstructor(parser, personValidator);
         final var personModifier = new DefaultPersonModifier();
 
-        final PersonListCache personList = new PersonListCache(3);
+        final var personList = new PersonListCache(3);
         final var httpClient = new DefaultHttpClient();
 
         return new DefaultPersonService(httpClient, personConstructor,

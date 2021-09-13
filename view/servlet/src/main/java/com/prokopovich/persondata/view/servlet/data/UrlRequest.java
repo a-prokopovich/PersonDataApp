@@ -4,5 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class UrlRequest {
-    String url;
+
+    private String url;
 }

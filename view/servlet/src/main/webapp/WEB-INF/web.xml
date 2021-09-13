@@ -51,6 +51,11 @@
     </servlet>
 
     <servlet-mapping>
+        <servlet-name>Initialization</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>Persons</servlet-name>
         <url-pattern>/persons</url-pattern>
     </servlet-mapping>

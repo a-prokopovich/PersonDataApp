@@ -1,32 +1,27 @@
 package com.prokopovich.persondata.view.servlet;
 
 import com.google.gson.Gson;
-import com.prokopovich.persondata.service.PersonService;
-import com.prokopovich.persondata.service.exception.PersonServiceException;
+import com.prokopovich.persondata.domain.service.PersonService;
+import com.prokopovich.persondata.domain.exception.PersonServiceException;
 import com.prokopovich.persondata.view.servlet.data.MessageResponse;
 import com.prokopovich.persondata.view.servlet.data.UrlRequest;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
 public class PersonsServlet extends HttpServlet {
 
     private final PersonService personService;
-    //private static final Logger log = LogManager.getLogger(PersonsServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        log.info("HELLO");
 
         response.setContentType("application/json;charset=UTF-8");
         var writer = response.getWriter();

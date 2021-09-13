@@ -1,9 +1,9 @@
 package com.prokopovich.persondata.view.servlet;
 
 import com.google.gson.Gson;
-import com.prokopovich.persondata.parser.jsonparser.JsonPersonParser;
-import com.prokopovich.persondata.service.PersonService;
-import com.prokopovich.persondata.service.exception.PersonServiceException;
+import com.prokopovich.persondata.domain.service.parser.JsonPersonParser;
+import com.prokopovich.persondata.domain.service.PersonService;
+import com.prokopovich.persondata.domain.exception.PersonServiceException;
 import com.prokopovich.persondata.view.servlet.data.MessageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
