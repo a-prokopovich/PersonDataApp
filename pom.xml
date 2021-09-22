@@ -7,6 +7,12 @@
     <packaging>pom</packaging>
     <version>1.0</version>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.4</version>
+    </parent>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -35,8 +41,7 @@
     <modules>
         <module>webclient</module>
         <module>domain</module>
-        <module>application</module>
-        <module>view</module>
+        <module>webapp</module>
     </modules>
 
     <dependencyManagement>
@@ -53,12 +58,7 @@
             </dependency>
             <dependency>
                 <groupId>com.prokopovich</groupId>
-                <artifactId>application</artifactId>
-                <version>${modules.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.prokopovich</groupId>
-                <artifactId>view</artifactId>
+                <artifactId>webapp</artifactId>
                 <version>${modules.version}</version>
             </dependency>
 
@@ -83,29 +83,29 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.databind.version}</version>
             </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servel-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <!--dependencies for each submodule-->
     <dependencies>
-        <!--logging -->
+        <!--spring -->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <!--lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!--test -->
         <dependency>

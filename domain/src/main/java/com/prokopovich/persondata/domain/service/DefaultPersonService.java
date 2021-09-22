@@ -1,13 +1,10 @@
 package com.prokopovich.persondata.domain.service;
 
 import com.prokopovich.persondata.domain.cache.Cache;
-import com.prokopovich.persondata.domain.exception.InvalidDataException;
 import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.domain.service.constructor.PersonConstructor;
 import com.prokopovich.persondata.domain.service.modifier.PersonModifier;
-import com.prokopovich.persondata.domain.validator.person.PersonValidator;
 import com.prokopovich.persondata.domain.exception.PersonServiceException;
-import com.prokopovich.persondata.domain.validator.inurl.InUrlValidator;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.domain.validator.httpresponse.HttpResponseValidator;
 import lombok.RequiredArgsConstructor;
@@ -19,22 +16,18 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class DefaultPersonService implements PersonService {
 
-    private final HttpClient httpClient;
     private final PersonConstructor personConstructor;
     private final PersonModifier personModifier;
 
-    private final PersonValidator personValidator;
-    private final InUrlValidator urlValidator;
+    private final HttpClient httpClient;
     private final HttpResponseValidator responseValidator;
 
-    private final Cache personListCache;
+    private final Cache<Integer, Person> personListCache;
 
     @Override
     public Person getByUrl(String url) {
 
         log.info("Getting person by url {}", url);
-
-        if (!urlValidator.checkEnteredUrl(url)) throw new PersonServiceException("entered invalid URL", 400);
 
         try {
             var httpResponse = httpClient.getData(url);
@@ -66,8 +59,10 @@ public class DefaultPersonService implements PersonService {
 
     @Override
     public Collection<Person> getListByCache() {
+
         Collection<Person> personList = personListCache.values();
         if (personList.isEmpty()) throw new PersonServiceException("Persons list is empty", 404);
+
         return personList;
     }
 
@@ -76,14 +71,8 @@ public class DefaultPersonService implements PersonService {
 
         log.info("Update person by id {} with new information: {}", id, modifiedPerson);
 
-        try {
-            checkContainsPerson(id);
-            personValidator.validate(modifiedPerson);
-
-            personListCache.put(id, modifiedPerson);
-        } catch (InvalidDataException e) {
-            throw new PersonServiceException("Unable updated Person: " + e.getMessage(), 404);
-        }
+        checkContainsPerson(id);
+        personListCache.put(id, modifiedPerson);
     }
 
     @Override
