@@ -13,6 +13,8 @@ import com.prokopovich.persondata.domain.service.parser.JsonPersonParser;
 import com.prokopovich.persondata.domain.service.parser.PersonParser;
 import com.prokopovich.persondata.domain.validator.httpresponse.DefaultHttpResponseValidator;
 import com.prokopovich.persondata.domain.validator.httpresponse.HttpResponseValidator;
+import com.prokopovich.persondata.webapp.filter.CORSFilter;
+import com.prokopovich.persondata.webapp.filter.CompressionFilter;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
 import org.springframework.context.annotation.Bean;
@@ -62,5 +64,15 @@ public class WebConfig {
 
         return new DefaultPersonService(personConstructor, personModifier,
             httpClient, httpResponseValidator, cache);
+    }
+
+    @Bean
+    public CORSFilter corsFilter() {
+        return new CORSFilter();
+    }
+
+    @Bean
+    public CompressionFilter compressorFilter() {
+        return new CompressionFilter();
     }
 }

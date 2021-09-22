@@ -6,10 +6,7 @@ import com.prokopovich.persondata.domain.service.PersonService;
 
 import com.prokopovich.persondata.webapp.request.UrlRequest;
 import com.prokopovich.persondata.webapp.response.MessageResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/persons")
@@ -33,9 +30,9 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("")
-    public List<Person> getAllPersons() throws PersonServiceException {
+    public Collection<Person> getAllPersons() throws PersonServiceException {
 
-        return (List<Person>) personService.getListByCache();
+        return personService.getListByCache();
     }
 
     @PostMapping("")
@@ -68,14 +65,5 @@ public class PersonController {
         personService.delete(id);
 
         return new MessageResponse("Person deleted successfully");
-    }
-
-    @ExceptionHandler(PersonServiceException.class)
-    public ResponseEntity<String> handleException(PersonServiceException e) {
-
-        log.error("Exception: " + e.getMessage(), e.getCause());
-        var jsonResponse = ("Exception: " + e.getMessage());
-
-        return new ResponseEntity<>(jsonResponse, HttpStatus.valueOf(e.getStatusCode()));
     }
 }
