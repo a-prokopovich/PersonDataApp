@@ -1,7 +1,7 @@
 package com.prokopovich.persondata.domain.validator.httpresponse;
 
-import com.prokopovich.persondata.domain.exception.HttpResponseException;
 import com.prokopovich.persondata.webclient.response.HttpResponse;
+import com.prokopovich.persondata.domain.exception.HttpResponseException;
 
 public interface HttpResponseValidator {
 

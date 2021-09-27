@@ -1,6 +1,6 @@
 package com.prokopovich.persondata.domain.service;
 
-import com.prokopovich.persondata.domain.cache.Cache;
+import com.prokopovich.persondata.domain.dao.api.PersonDao;
 import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.domain.service.constructor.PersonConstructor;
 import com.prokopovich.persondata.domain.service.modifier.PersonModifier;
@@ -22,7 +22,7 @@ public class DefaultPersonService implements PersonService {
     private final HttpClient httpClient;
     private final HttpResponseValidator responseValidator;
 
-    private final Cache<Integer, Person> personListCache;
+    private final PersonDao personDao;
 
     @Override
     public Person getByUrl(String url) {
@@ -34,6 +34,7 @@ public class DefaultPersonService implements PersonService {
             responseValidator.checkHttpResponse(httpResponse);
 
             var person = personConstructor.construct(httpResponse.getBody());
+            save(person);
 
             return personModifier.modify(person);
         } catch (Exception e) {
@@ -42,28 +43,28 @@ public class DefaultPersonService implements PersonService {
     }
 
     @Override
+    public void save(Person person) {
+        personDao.create(person);
+    }
+
+    @Override
+    public Collection<Person> getPersonList() {
+
+        Collection<Person> personList = personDao.findAll();
+        if (personList.isEmpty()) throw new PersonServiceException("Persons list is empty", 404);
+
+        return personList;
+    }
+
+    @Override
     public Person getById(int id) {
 
         log.info("Getting person by id {}", id);
 
-        var person = getById(id);
+        var person = personDao.findById(id);
         if (person == null) throw new PersonServiceException("Unable to get Person by Id: Person not found", 404);
 
         return person;
-    }
-
-    @Override
-    public void putToListCache(Person person) {
-        personListCache.put(person.getId(), person);
-    }
-
-    @Override
-    public Collection<Person> getListByCache() {
-
-        Collection<Person> personList = personListCache.values();
-        if (personList.isEmpty()) throw new PersonServiceException("Persons list is empty", 404);
-
-        return personList;
     }
 
     @Override
@@ -71,8 +72,7 @@ public class DefaultPersonService implements PersonService {
 
         log.info("Update person by id {} with new information: {}", id, modifiedPerson);
 
-        checkContainsPerson(id);
-        personListCache.put(id, modifiedPerson);
+        personDao.update(id, modifiedPerson);
     }
 
     @Override
@@ -80,13 +80,6 @@ public class DefaultPersonService implements PersonService {
 
         log.info("Delete person by id {}", id);
 
-        checkContainsPerson(id);
-        personListCache.remove(id);
-    }
-
-    private void checkContainsPerson(int id) throws PersonServiceException {
-
-        if (!personListCache.containsKey(id))
-            throw new PersonServiceException("Unable delete Person: Person by Id not found", 404);
+        personDao.delete(id);
     }
 }

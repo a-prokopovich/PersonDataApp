@@ -16,6 +16,10 @@ public class PassportData {
 
     @Positive
     @JsonProperty(required = true)
+    private int id;
+
+    @Positive
+    @JsonProperty(required = true)
     private int personId;
 
     @NotEmpty(message = "Required fields Passport Number are not filled")

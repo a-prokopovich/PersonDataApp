@@ -1,6 +1,6 @@
 package com.prokopovich.persondata.domain.service
 
-import com.prokopovich.persondata.domain.cache.Cache
+import com.prokopovich.persondata.domain.dao.api.PersonDao
 import com.prokopovich.persondata.domain.service.constructor.PersonConstructor
 import com.prokopovich.persondata.domain.service.modifier.PersonModifier
 
@@ -19,11 +19,11 @@ class DefaultPersonServiceTest extends Specification {
     def httpClient = Mock(HttpClient)
     def personConstructor = Mock(PersonConstructor)
     def personModifier = Mock(PersonModifier)
-    def personListCache = Mock(Cache)
     def httpResponseValidator = Mock(HttpResponseValidator)
+    def personDao = Mock(PersonDao)
 
     def personService = new DefaultPersonService(personConstructor,
-        personModifier, httpClient, httpResponseValidator, personListCache)
+        personModifier, httpClient, httpResponseValidator, personDao)
 
     def "should return string with person info in success case"() {
         given:

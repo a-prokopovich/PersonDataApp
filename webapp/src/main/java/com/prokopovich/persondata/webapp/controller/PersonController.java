@@ -32,14 +32,13 @@ public class PersonController {
     @GetMapping("")
     public Collection<Person> getAllPersons() throws PersonServiceException {
 
-        return personService.getListByCache();
+        return personService.getPersonList();
     }
 
     @PostMapping("")
     public Person getPersonByUrl(@Valid @RequestBody UrlRequest urlRequest) {
 
         var person = personService.getByUrl(urlRequest.getUrl());
-        personService.putToListCache(person);
 
         return person;
     }

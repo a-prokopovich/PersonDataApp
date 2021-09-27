@@ -8,11 +8,11 @@ public interface PersonService {
 
     Person getByUrl(String urlStr);
 
+    void save(Person person);
+
+    Collection<Person> getPersonList();
+
     Person getById(int id);
-
-    void putToListCache(Person person);
-
-    Collection<Person> getListByCache();
 
     void update(int id, Person modifiedPerson);
 

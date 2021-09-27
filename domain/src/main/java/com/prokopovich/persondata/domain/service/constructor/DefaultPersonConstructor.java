@@ -1,8 +1,8 @@
 package com.prokopovich.persondata.domain.service.constructor;
 
+import com.prokopovich.persondata.domain.service.parser.PersonParser;
 import com.prokopovich.persondata.domain.exception.PersonConstructorException;
 import com.prokopovich.persondata.domain.model.Person;
-import com.prokopovich.persondata.domain.service.parser.PersonParser;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
