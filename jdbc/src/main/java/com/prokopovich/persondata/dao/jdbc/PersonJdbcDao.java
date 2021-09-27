@@ -11,11 +11,12 @@ import java.sql.SQLException;
 
 public class PersonJdbcDao extends GenericJdbcDao<Person> implements PersonDao {
 
-    private static final String SQL_CREATE = "INSERT INTO persons (full_name, phone, email) VALUES (?, ?, ?)";
-    private static final String SQL_SELECT_ALL = "SELECT id, full_name, phone, email FROM persons";
-    private static final String SQL_SELECT_ONE = "SELECT id, full_name, phone, email FROM persons WHERE id = ?";
-    private static final String SQL_UPDATE = "UPDATE persons SET full_name = ?, phone = ?, email = ? WHERE id = ?";
-    private static final String SQL_DELETE = "DELETE FROM persons WHERE id = ?";
+    private static final String SQL_CREATE = "INSERT INTO persons_db.persons (full_name, phone, email) VALUES (?, ?, ?)";
+    private static final String SQL_SELECT_ALL = "SELECT id, full_name, phone, email FROM persons_db.persons";
+    private static final String SQL_SELECT_ONE = "SELECT id, full_name, phone, email FROM persons_db.persons WHERE id = ?";
+    private static final String SQL_UPDATE = "UPDATE persons_db.persons SET full_name = ?, phone = ?, email = ? " +
+        "WHERE id = ?";
+    private static final String SQL_DELETE = "DELETE FROM persons_db.persons WHERE id = ?";
 
     private final PassportDataDao passportDataDao;
 
@@ -29,6 +30,16 @@ public class PersonJdbcDao extends GenericJdbcDao<Person> implements PersonDao {
 
         super.create(newObject);
         passportDataDao.create(newObject.getPassportData());
+    }
+
+    @Override
+    public void update(int id, Person person) {
+        super.update(id, person);
+    }
+
+    @Override
+    public void delete(int id) {
+        super.delete(id);
     }
 
     @Override

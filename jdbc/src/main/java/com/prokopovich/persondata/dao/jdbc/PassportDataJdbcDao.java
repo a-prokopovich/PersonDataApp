@@ -10,15 +10,15 @@ import java.sql.SQLException;
 
 public class PassportDataJdbcDao extends GenericJdbcDao<PassportData> implements PassportDataDao {
 
-    private static final String SQL_CREATE = "INSERT INTO passport_data (person_id, passport_number, " +
+    private static final String SQL_CREATE = "INSERT INTO persons_db.passport_data (person_id, passport_number, " +
         "identification_number) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_ALL = "SELECT id, person_id, passport_number, identification_number " +
-        "FROM passport_data";
+        "FROM persons_db.passport_data";
     private static final String SQL_SELECT_ONE = "SELECT id, person_id, passport_number, identification_number " +
-        "FROM passport_data WHERE id = ?";
-    private static final String SQL_UPDATE = "UPDATE passport_data SET person_id = ?, passport_number = ?, " +
-        "identification_number = ? WHERE id = ?";
-    private static final String SQL_DELETE = "DELETE FROM passport_data WHERE id = ?";
+        "FROM persons_db.passport_data WHERE id = ?";
+    private static final String SQL_UPDATE = "UPDATE persons_db.passport_data SET person_id = ?, " +
+        "passport_number = ?, identification_number = ? WHERE id = ?";
+    private static final String SQL_DELETE = "DELETE FROM persons_db.passport_data WHERE id = ?";
 
     public PassportDataJdbcDao(DataSource dataSource) {
         super(dataSource);

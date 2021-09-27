@@ -103,10 +103,10 @@ public abstract class GenericJdbcDao<T> implements GenericDao<T> {
         log.debug("Delete object from database with id = {}", id);
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getSqlUpdate())) {
+             PreparedStatement statement = connection.prepareStatement(getSqlDelete())) {
 
             statement.setInt(1, id);
-            statement.executeUpdate(getSqlDelete());
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
