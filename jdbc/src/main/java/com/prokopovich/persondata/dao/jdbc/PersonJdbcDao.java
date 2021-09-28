@@ -11,7 +11,8 @@ import java.sql.SQLException;
 
 public class PersonJdbcDao extends GenericJdbcDao<Person> implements PersonDao {
 
-    private static final String SQL_CREATE = "INSERT INTO persons_db.persons (full_name, phone, email) VALUES (?, ?, ?)";
+    private static final String SQL_CREATE = "INSERT INTO persons_db.persons (id, full_name, phone, email) " +
+        "VALUES (?, ?, ?, ?)";
     private static final String SQL_SELECT_ALL = "SELECT id, full_name, phone, email FROM persons_db.persons";
     private static final String SQL_SELECT_ONE = "SELECT id, full_name, phone, email FROM persons_db.persons WHERE id = ?";
     private static final String SQL_UPDATE = "UPDATE persons_db.persons SET full_name = ?, phone = ?, email = ? " +
@@ -77,16 +78,18 @@ public class PersonJdbcDao extends GenericJdbcDao<Person> implements PersonDao {
         person.setPhone(rs.getString(3));
         person.setEmail(rs.getString(4));
 
-        person.setPassportData(passportDataDao.findById(person.getId()));
+        person.setPassportData(passportDataDao.findByPersonId(person.getId()));
+
         return person;
     }
 
     @Override
     public void setStatement(Person person, PreparedStatement statement) throws SQLException {
 
-        statement.setString(1, person.getFullName());
-        statement.setString(2, person.getPhone());
-        statement.setString(3, person.getEmail());
+        statement.setInt(1, person.getId());
+        statement.setString(2, person.getFullName());
+        statement.setString(3, person.getPhone());
+        statement.setString(4, person.getEmail());
     }
 
     @Override

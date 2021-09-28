@@ -1,0 +1,4 @@
+ALTER TABLE IF EXISTS persons_db.persons
+    ALTER COLUMN id TYPE INTEGER,
+    ADD CONSTRAINT id_unique_idx UNIQUE (id),
+    ALTER COLUMN full_name TYPE CHARACTER VARYING(50);
