@@ -1,12 +1,18 @@
 package com.prokopovich.persondata.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
+@Entity
+@Table(name = "passport_data")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,27 +20,24 @@ import javax.validation.constraints.Positive;
 @Builder
 public class PassportData {
 
+    @Id
     @Positive
-    @JsonProperty(required = true)
+    @Column(name = "id")
     private int id;
-
-    @Positive
-    @JsonProperty(required = true)
-    private int personId;
 
     @NotEmpty(message = "Required fields Passport Number are not filled")
     @Pattern(regexp = "[A-Z0-9]{2}[\\u0020]?[0-9]{2}[\\u0020]?[0-9]{2,8}", message = "Invalid Passport Number")
-    @JsonProperty(required = true)
+    @Column(name = "passport_number")
     private String passportNumber;
 
     @NotEmpty(message = "Required fields Identification Number are not filled")
-    @JsonProperty(required = true)
+    @Column(name = "identification_number")
     private String identificationNumber;
 
     @Override
     public String toString() {
         return "passport data: " +
-            "personId = " + personId +
+            "id = " + id +
             ", passportNumber = " + passportNumber +
             ", identificationNumber = " + identificationNumber;
     }

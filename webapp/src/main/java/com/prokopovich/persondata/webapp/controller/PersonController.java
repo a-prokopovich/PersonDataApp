@@ -32,19 +32,23 @@ public class PersonController {
     @GetMapping("")
     public Collection<Person> getAllPersons() throws PersonServiceException {
 
+        log.info("Getting list of Persons");
+
         return personService.getPersonList();
     }
 
     @PostMapping("")
     public Person getPersonByUrl(@Valid @RequestBody UrlRequest urlRequest) {
 
-        var person = personService.getByUrl(urlRequest.getUrl());
+        log.info("Getting Person by url: {}", urlRequest.getUrl());
 
-        return person;
+        return personService.getByUrl(urlRequest.getUrl());
     }
 
     @GetMapping(value = "/{id}")
     public Person getPersonById(@PathVariable int id) {
+
+        log.info("Getting Person by id = {}", id);
 
         return personService.getById(id);
     }
@@ -53,6 +57,7 @@ public class PersonController {
     public MessageResponse updatePerson(@PathVariable int id,
                                         @Valid @RequestBody Person person) {
 
+        log.info("Updating Person by id = {}", id);
         personService.update(id, person);
 
         return new MessageResponse("Person updated successfully");
@@ -61,6 +66,7 @@ public class PersonController {
     @DeleteMapping(value = "/{id}")
     public MessageResponse deletePerson(@PathVariable int id) {
 
+        log.info("Deleting Person by id = {}", id);
         personService.delete(id);
 
         return new MessageResponse("Person deleted successfully");

@@ -13,12 +13,13 @@ public class JsonPersonParser implements PersonParser {
     @Override
     public Person parse(byte[] personIn) {
 
-        log.info("Parsing byte array ro person: {}", new String(personIn));
+        log.debug("Parsing byte array to person: {}", new String(personIn));
 
         try {
             return new Gson().fromJson(
                 new String(personIn),
                 Person.class);
+
         } catch (JsonSyntaxException e) {
             throw new ParserException(e.getMessage());
         }

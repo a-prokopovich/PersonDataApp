@@ -27,8 +27,6 @@ public class DefaultPersonService implements PersonService {
     @Override
     public Person getByUrl(String url) {
 
-        log.info("Getting person by url {}", url);
-
         try {
             var httpResponse = httpClient.getData(url);
             responseValidator.checkHttpResponse(httpResponse);
@@ -44,6 +42,8 @@ public class DefaultPersonService implements PersonService {
 
     @Override
     public void save(Person person) {
+
+        log.info("Saving new Person");
         personDao.create(person);
     }
 
@@ -59,8 +59,6 @@ public class DefaultPersonService implements PersonService {
     @Override
     public Person getById(int id) {
 
-        log.info("Getting person by id {}", id);
-
         var person = personDao.findById(id);
         if (person == null) throw new PersonServiceException("Unable to get Person by Id: Person not found", 404);
 
@@ -70,16 +68,12 @@ public class DefaultPersonService implements PersonService {
     @Override
     public void update(int id, Person modifiedPerson) {
 
-        log.info("Update person by id {} with new information: {}", id, modifiedPerson);
-
+        log.debug("Updating person by id {} with new information: {}", id, modifiedPerson);
         personDao.update(id, modifiedPerson);
     }
 
     @Override
     public void delete(int id) {
-
-        log.info("Delete person by id {}", id);
-
         personDao.delete(id);
     }
 }

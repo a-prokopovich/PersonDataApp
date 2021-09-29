@@ -4,5 +4,4 @@ import com.prokopovich.persondata.domain.model.PassportData;
 
 public interface PassportDataDao extends GenericDao<PassportData> {
 
-    PassportData findByPersonId(int id);
 }

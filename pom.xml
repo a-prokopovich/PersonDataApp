@@ -31,6 +31,7 @@
         <spring-jdbc.version>5.3.10</spring-jdbc.version>
         <flyway-core-version>7.15.0</flyway-core-version>
         <postgresql.version>42.2.24</postgresql.version>
+        <hibernate.core.version>5.5.7.Final</hibernate.core.version>
         <spock.version>2.0-groovy-3.0</spock.version>
         <groovy-all.version>3.0.8</groovy-all.version>
         <cglib.version>3.3.0</cglib.version>
@@ -71,6 +72,11 @@
                 <artifactId>jdbc</artifactId>
                 <version>${modules.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.prokopovich</groupId>
+                <artifactId>hibernate</artifactId>
+                <version>${modules.version}</version>
+            </dependency>
 
             <!--external deps-->
             <dependency>
@@ -94,14 +100,14 @@
                 <version>${jackson.databind.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>${spring-jdbc.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway-core-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -125,17 +131,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <!--lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <!--database -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway-core-version}</version>
         </dependency>
         <!--test -->
         <dependency>

@@ -2,32 +2,45 @@ package com.prokopovich.persondata.dao.jdbc;
 
 import com.prokopovich.persondata.domain.dao.api.GenericDao;
 import com.prokopovich.persondata.domain.exception.DaoException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 public abstract class GenericJdbcDao<T> implements GenericDao<T> {
 
-    private final DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
+
+    protected abstract String getSqlCreate();
+
+    protected abstract String getSqlSelectAll();
+
+    protected abstract String getSqlFindById();
+
+    protected abstract String getSqlUpdate();
+
+    protected abstract String getSqlDelete();
+
+    protected abstract T getStatement(ResultSet rs) throws SQLException;
+
+    protected abstract void setStatement(T object, PreparedStatement statement) throws SQLException;
+
+    protected abstract void setUpdateStatement(int id, T object, PreparedStatement statement) throws SQLException;
 
     @Override
     public void create(T newObject) {
 
         log.debug("Create method started with new object = {}", newObject);
-        String sql = getSqlCreate();
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (var connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(getSqlCreate())) {
 
             setStatement(newObject, statement);
             statement.executeUpdate();
@@ -38,47 +51,46 @@ public abstract class GenericJdbcDao<T> implements GenericDao<T> {
     }
 
     @Override
-    public Collection<T> findAll() {
+    public List<T> findAll() {
 
         log.debug("Getting object list from database");
-        T object;
-        List<T> objectsList = new ArrayList<>();
 
-        String sql = getSqlSelectAll();
+        try (var connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(getSqlSelectAll())) {
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            var rs = statement.executeQuery();
 
-            ResultSet rs = statement.executeQuery();
+            List<T> objectsList = new ArrayList<>();
             while (rs.next()) {
-                object = getStatement(rs);
+                T object = getStatement(rs);
                 objectsList.add(object);
             }
+
+            return objectsList;
         } catch (SQLException e) {
             throw new DaoException("Unable get object list from database: " + e.getMessage());
         }
-        return objectsList;
     }
 
     @Override
     public T findById(int id) {
 
         log.debug("Getting object from database with id = {}", id);
-        T object = null;
-        String sql = getSqlFindById();
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (var connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(getSqlFindById())) {
 
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
+            var rs = statement.executeQuery();
             if (rs != null && rs.next()) {
-                object = getStatement(rs);
-            }
+
+                return getStatement(rs);
+
+            } else return null;
+
         } catch (SQLException e) {
             throw new DaoException("Unable to get object by id from database: " + e.getMessage());
         }
-        return object;
     }
 
     @Override
@@ -86,8 +98,8 @@ public abstract class GenericJdbcDao<T> implements GenericDao<T> {
 
         log.debug("Update object in database with id = {} and new data: {}", id, object);
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getSqlUpdate())) {
+        try (var connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(getSqlUpdate())) {
 
             setUpdateStatement(id, object, statement);
             statement.executeUpdate();
@@ -102,14 +114,14 @@ public abstract class GenericJdbcDao<T> implements GenericDao<T> {
 
         log.debug("Delete object from database with id = {}", id);
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getSqlDelete())) {
+        try (var connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(getSqlDelete())) {
 
             statement.setInt(1, id);
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException("Unable to delete object from database: " + e.getMessage());
         }
     }
 }
