@@ -1,6 +1,7 @@
 package com.prokopovich.persondata.domain.service;
 
-import com.prokopovich.persondata.domain.dao.api.PersonDao;
+import com.prokopovich.persondata.domain.dao.repository.PassportDataRepository;
+import com.prokopovich.persondata.domain.dao.repository.PersonRepository;
 import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.domain.service.constructor.PersonConstructor;
 import com.prokopovich.persondata.domain.service.modifier.PersonModifier;
@@ -9,6 +10,9 @@ import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.domain.validator.httpresponse.HttpResponseValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -22,7 +26,11 @@ public class DefaultPersonService implements PersonService {
     private final HttpClient httpClient;
     private final HttpResponseValidator responseValidator;
 
-    private final PersonDao personDao;
+    @Autowired
+    private PersonRepository personRepository;
+
+    @Autowired
+    private PassportDataRepository passportDataRepository;
 
     @Override
     public Person getByUrl(String url) {
@@ -44,36 +52,38 @@ public class DefaultPersonService implements PersonService {
     public void save(Person person) {
 
         log.info("Saving new Person");
-        personDao.create(person);
+        personRepository.save(person);
+        passportDataRepository.save(person.getPassportData());
     }
 
     @Override
     public Collection<Person> getPersonList() {
 
-        Collection<Person> personList = personDao.findAll();
-        if (personList.isEmpty()) throw new PersonServiceException("Persons list is empty", 404);
+        var personList = personRepository.findAll();
+        if (!personList.iterator().hasNext()) throw new PersonServiceException("Persons list is empty", 404);
 
-        return personList;
+        return (Collection<Person>) personList;
     }
 
     @Override
     public Person getById(int id) {
 
-        var person = personDao.findById(id);
-        if (person == null) throw new PersonServiceException("Unable to get Person by Id: Person not found", 404);
+        var person = personRepository.findById(id);
+        if (person.isEmpty()) throw new PersonServiceException("Unable to get Person by Id: Person not found", 404);
 
-        return person;
+        return person.get();
     }
 
     @Override
     public void update(int id, Person modifiedPerson) {
 
         log.debug("Updating person by id {} with new information: {}", id, modifiedPerson);
-        personDao.update(id, modifiedPerson);
+        personRepository.save(modifiedPerson);
     }
 
     @Override
     public void delete(int id) {
-        personDao.delete(id);
+        passportDataRepository.deleteById(id);
+        personRepository.deleteById(id);
     }
 }

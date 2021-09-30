@@ -15,10 +15,14 @@ import com.prokopovich.persondata.webapp.filter.CORSFilter;
 import com.prokopovich.persondata.webapp.filter.CompressionFilter;
 import com.prokopovich.persondata.webclient.api.HttpClient;
 import com.prokopovich.persondata.webclient.httpclient.DefaultHttpClient;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
+@EnableJpaRepositories("com.prokopovich.persondata.domain.dao.repository")
+@EntityScan("com.prokopovich.persondata.domain.model")
 public class WebConfig {
 
     @Bean
@@ -50,11 +54,10 @@ public class WebConfig {
     public PersonService personService(PersonConstructor personConstructor,
                                        PersonModifier personModifier,
                                        HttpClient httpClient,
-                                       HttpResponseValidator httpResponseValidator,
-                                       PersonDao personDao) {
+                                       HttpResponseValidator httpResponseValidator) {
 
         return new DefaultPersonService(personConstructor, personModifier,
-            httpClient, httpResponseValidator, personDao);
+            httpClient, httpResponseValidator);
     }
 
     //@Bean

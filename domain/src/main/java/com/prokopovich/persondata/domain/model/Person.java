@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -44,8 +45,9 @@ public class Person {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "personInfo", cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id")
+    //@PrimaryKeyJoinColumn
     private PassportData passportData;
 
     @Override
