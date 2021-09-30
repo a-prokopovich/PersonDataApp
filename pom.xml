@@ -46,8 +46,7 @@
         <module>webclient</module>
         <module>domain</module>
         <module>webapp</module>
-        <module>jdbc</module>
-        <module>hibernate</module>
+        <module>dao</module>
     </modules>
 
     <dependencyManagement>

@@ -9,9 +9,9 @@ import lombok.Data;
 @Builder
 public class HttpResponse {
 
-    private final int statusCode;
+    private int statusCode;
 
-    private final byte[] body;
+    private byte[] body;
 
     @Override
     public String toString() {

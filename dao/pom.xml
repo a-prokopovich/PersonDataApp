@@ -10,7 +10,13 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>hibernate</artifactId>
+    <artifactId>dao</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>jdbc</module>
+        <module>hibernate</module>
+    </modules>
 
     <dependencies>
         <dependency>
