@@ -5,10 +5,7 @@ import lombok.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -45,9 +42,8 @@ public class Person {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(mappedBy = "personInfo", cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personInfo")
+    @PrimaryKeyJoinColumn
     private PassportData passportData;
 
     @Override

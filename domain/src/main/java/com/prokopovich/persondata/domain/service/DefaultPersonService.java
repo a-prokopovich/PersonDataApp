@@ -1,6 +1,5 @@
 package com.prokopovich.persondata.domain.service;
 
-import com.prokopovich.persondata.domain.dao.repository.PassportDataRepository;
 import com.prokopovich.persondata.domain.dao.repository.PersonRepository;
 import com.prokopovich.persondata.domain.model.Person;
 import com.prokopovich.persondata.domain.service.constructor.PersonConstructor;
@@ -11,8 +10,6 @@ import com.prokopovich.persondata.domain.validator.httpresponse.HttpResponseVali
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -29,9 +26,6 @@ public class DefaultPersonService implements PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    @Autowired
-    private PassportDataRepository passportDataRepository;
-
     @Override
     public Person getByUrl(String url) {
 
@@ -43,6 +37,7 @@ public class DefaultPersonService implements PersonService {
             save(person);
 
             return personModifier.modify(person);
+
         } catch (Exception e) {
             throw new PersonServiceException("Unable to get Person from URL: " + e.getMessage(), e, 500);
         }
@@ -53,16 +48,12 @@ public class DefaultPersonService implements PersonService {
 
         log.info("Saving new Person");
         personRepository.save(person);
-        passportDataRepository.save(person.getPassportData());
     }
 
     @Override
     public Collection<Person> getPersonList() {
 
-        var personList = personRepository.findAll();
-        if (!personList.iterator().hasNext()) throw new PersonServiceException("Persons list is empty", 404);
-
-        return (Collection<Person>) personList;
+        return (Collection<Person>) personRepository.findAll();
     }
 
     @Override
@@ -83,7 +74,6 @@ public class DefaultPersonService implements PersonService {
 
     @Override
     public void delete(int id) {
-        passportDataRepository.deleteById(id);
         personRepository.deleteById(id);
     }
 }

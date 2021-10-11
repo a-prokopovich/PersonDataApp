@@ -1,5 +1,6 @@
 package com.prokopovich.persondata.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -36,10 +37,11 @@ public class PassportData {
     @Column(name = "identification_number")
     private String identificationNumber;
 
-    //@OneToOne
-    //@MapsId
-    //@JoinColumn(name = "id")
-    //private Person personInfo;
+    @JsonIgnore
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private Person personInfo;
 
     @Override
     public String toString() {

@@ -16,9 +16,13 @@ public class JsonPersonParser implements PersonParser {
         log.debug("Parsing byte array to person: {}", new String(personIn));
 
         try {
-            return new Gson().fromJson(
+            var person = new Gson().fromJson(
                 new String(personIn),
                 Person.class);
+
+            person.getPassportData().setPersonInfo(person);
+
+            return person;
 
         } catch (JsonSyntaxException e) {
             throw new ParserException(e.getMessage());

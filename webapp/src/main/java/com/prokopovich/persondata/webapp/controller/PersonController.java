@@ -30,11 +30,14 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("")
-    public Collection<Person> getAllPersons() throws PersonServiceException {
+    public Object getAllPersons() throws PersonServiceException {
 
         log.info("Getting list of Persons");
+        var personList = personService.getPersonList();
 
-        return personService.getPersonList();
+        if (personList.isEmpty()) return new MessageResponse("Persons list is empty");
+
+        return personList;
     }
 
     @PostMapping("")

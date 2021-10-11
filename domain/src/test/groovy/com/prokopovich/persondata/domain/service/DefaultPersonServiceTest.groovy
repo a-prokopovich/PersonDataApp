@@ -25,7 +25,7 @@ class DefaultPersonServiceTest extends Specification {
     def personService = new DefaultPersonService(personConstructor,
         personModifier, httpClient, httpResponseValidator, personDao)
 
-    def "should return string with person info in success case"() {
+    def "should return person info in success case"() {
         given:
             def url = "valid url"
 
