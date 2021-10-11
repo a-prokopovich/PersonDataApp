@@ -19,7 +19,7 @@ public class DefaultInUrlValidator implements ConstraintValidator<ValidInUrl, St
     @Override
     public boolean isValid(String url, ConstraintValidatorContext constraintValidatorContext) {
 
-        if (!URL_VALIDATOR.isValid(url)) throw new PersonServiceException("entered invalid URL", 400);
+        if (!URL_VALIDATOR.isValid(url)) throw new PersonServiceException("entered invalid URL: " + url, 400);
         else return true;
     }
 }

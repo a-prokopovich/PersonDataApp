@@ -69,11 +69,19 @@ public class DefaultPersonService implements PersonService {
     public void update(int id, Person modifiedPerson) {
 
         log.debug("Updating person by id {} with new information: {}", id, modifiedPerson);
+
+        if (personRepository.findById(id).isEmpty())
+            throw new PersonServiceException("Unable to update Person: Person not found", 404);
+
         personRepository.save(modifiedPerson);
     }
 
     @Override
     public void delete(int id) {
+
+        if (personRepository.findById(id).isEmpty())
+            throw new PersonServiceException("Unable to delete Person: Person not found", 404);
+
         personRepository.deleteById(id);
     }
 }

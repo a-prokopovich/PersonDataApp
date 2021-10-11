@@ -21,6 +21,7 @@ public class DefaultHttpClient implements HttpClient {
 
         try {
             var connection = (HttpURLConnection) new URL(url).openConnection();
+            System.out.println(connection);
             var response = HttpResponse.builder()
                 .statusCode(connection.getResponseCode())
                 .body(IOUtils.toByteArray((connection.getInputStream())))

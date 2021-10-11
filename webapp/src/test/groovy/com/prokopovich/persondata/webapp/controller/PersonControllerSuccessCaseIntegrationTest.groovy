@@ -1,15 +1,9 @@
 package com.prokopovich.persondata.webapp.controller
 
-import com.prokopovich.persondata.domain.model.Person
 import com.prokopovich.persondata.webapp.IntegrationTestSpecification
-import org.mockserver.model.Header
-import org.mockserver.client.MockServerClient
-import org.mockserver.model.HttpRequest
-import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 
-import static org.mockserver.model.HttpResponse.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 
@@ -69,7 +63,7 @@ class PersonControllerSuccessCaseIntegrationTest extends IntegrationTestSpecific
 
         given:
             def url = getMockUrl()
-            def body = "{\"url\": \"" + url + "\"}"
+            def body = "{\"url\":\"" + url + "\"}"
 
         when:
             def response = mockMvc.perform(MockMvcRequestBuilders.post("/persons")

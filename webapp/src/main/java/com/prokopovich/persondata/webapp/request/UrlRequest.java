@@ -1,11 +1,11 @@
 package com.prokopovich.persondata.webapp.request;
 
-import com.prokopovich.persondata.domain.validator.inurl.ValidInUrl;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 @Data
 public class UrlRequest {
 
-    @ValidInUrl
+    @URL
     private String url;
 }
